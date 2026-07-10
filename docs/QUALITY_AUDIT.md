@@ -17,3 +17,20 @@ Honest current state after the foundation build:
 
 **Below-target items → NEXT_ACTIONS:** bundle code-split, distinct 3D per
 division, focus trap, richer sequence choreography.
+
+## Macro pass 2 — after Session 3 (2026-07-10)
+
+| Category            | Score | Evidence |
+|---------------------|:-----:|----------|
+| Art direction       |  9    | Division scenes extend the language (sentinel lattice, node cloud, archive strata, sovereign disc) without new gimmicks. |
+| Composition/layout  |  9    | 9-sequence homepage rhythm; scene bands sit inside the hairline system. |
+| Typography          |  9    | Unchanged system; unique per-route titles now in prerendered HTML. |
+| 3D craft            |  9    | Four distinct concepts + hero monolith; env-lit, silhouettes verified in screenshots after a lighting correction pass. |
+| Motion              |  8.5  | Damped rigs, pulsing signals, precision cursor; scroll-scrub choreography of sequences still pending. |
+| Copy / voice        |  9    | New sequences and governance band stay in institutional register. |
+| Performance         |  8.5  | Hero lazy; division pages ship ~280 KB HTML/CSS/JS before opting into the 3D chunk. |
+| Accessibility       |  8    | Reduced-motion skips scenes & cursor; focus trap still pending. |
+| Legal cleanliness   |  9.5  | All new assets procedural; manifest updated. |
+
+Weak items feed NEXT_ACTIONS (focus trap, scroll-scrub choreography, remaining
+division concepts, cross-browser matrix).
