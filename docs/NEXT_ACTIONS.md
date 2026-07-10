@@ -50,10 +50,13 @@ smallest honest increment first):
   DONE (session 16 — a11y 0.95→1.0: ash-2 contrast lift + SND aria-label;
   perf 0.28 is a swiftshader/software-GL artifact, remaining perf findings
   are third-party: Google Fonts CSS + gh-pages cache headers).
-- Optional perf follow-up if a cycle wants it: self-host the three Google
-  Fonts families (removes render-blocking third-party CSS + its unminified
-  9 KiB); re-measure Lighthouse on real-GPU Chrome before trusting any
-  perf delta.
+- ~~Self-host the three Google Fonts families (removes render-blocking
+  third-party CSS + its unminified 9 KiB)~~ DONE (session 17 — Archivo /
+  JetBrains Mono variable woff2 latin+latin-ext; Zen Kaku Gothic New
+  pyftsubset to kana + 82 used kanji, 2.3 MB→33 KB per weight; zero
+  third-party requests remain).
+- Optional: re-measure Lighthouse on real-GPU Chrome (not swiftshader) to
+  quantify the font-self-hosting perf delta before trusting any score.
 
 ## Autonomous protocol
 Main-session cron re-enters this file each cycle, picks the top undone item,

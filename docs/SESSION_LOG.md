@@ -288,3 +288,24 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
   asserted rgb(122,121,114) via playwright); Lighthouse a11y re-run on the
   local build = 1.0 with both audits passing; CI run 29112562067 green
   (deploy + live-route verify).
+
+## Session 17 — Self-hosted fonts (2026-07-11)
+- Implemented the perf follow-up from session 16: dropped the render-blocking
+  Google Fonts CSS + preconnects from root.tsx; all three families now ship
+  from our own origin via `src/styles/fonts.css` (imported before global.css,
+  so the woff2s ride the vite asset pipeline with hashed URLs).
+- Archivo + JetBrains Mono: Google's own variable-wght woff2s (latin +
+  latin-ext subsets, unicode-range preserved) — 4 files, ~110 KB total.
+- Zen Kaku Gothic New: full JP TTFs are ~2.3 MB/weight; site copy uses a
+  fixed glyph set, so subset each weight with pyftsubset to kana/punct blocks
+  (U+3000-30FF) + the 82 kanji appearing under src/ → ~33 KB/weight.
+  Regen recipe + OFL notes in `src/styles/fonts/README.md`; missing future
+  glyphs degrade to the system JP font (no tofu).
+- Gates: `npm run build` clean (tsc + prerender + postbuild); 1440 screenshots
+  of / and /legal/ inspected (Archivo display type, mono telemetry, JP glyphs
+  株式会社アラサカ / 法務・分類 all render in the right faces; disclaimer
+  intact); built site greps 0 hits for googleapis|gstatic; CI run
+  29113036336 green (deploy + live-route verify); live HTML clean, subset
+  woff2 serves 200.
+- Next perf step if a cycle wants it: re-measure Lighthouse on real-GPU
+  Chrome to quantify the delta.
