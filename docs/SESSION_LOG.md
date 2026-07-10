@@ -254,3 +254,18 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
   390 + 1440 screenshots inspected via scripts/shot-hero.mjs against
   preview (lede legible over the dais, soft non-boxy falloff, desktop
   unchanged); CI run 29111852960 green (deploy + live-route verify).
+
+## Session 15 — Content pass: Night City block (2026-07-11)
+- Re-read all division copy in src/content/pages.ts for tone drift and
+  repetition. Weakest paragraph: Global Network → Night City ("A theater of
+  concentrated corporate presence, secured infrastructure, and strategic
+  response.") — three abstract noun phrases, no closing turn (every sibling
+  block lands one), and "strategic response" duplicated the Security
+  division's block title. Rewrote to: "The corporation's deepest presence
+  abroad, held street by street. What Tokyo decides, Night City
+  demonstrates." — parallel with the Tokyo block, concrete, in-tone.
+- Rest of the copy judged consistent: "sovereign"/"continuity" recurrence is
+  deliberate leitmotif, not drift; no other paragraph flagged.
+- Gates: `npm run build` clean (tsc + prerender + postbuild); 1440
+  screenshot of /global-network/ inspected (new copy renders, layout
+  intact); CI run 29112105686 green (deploy + live-route verify).

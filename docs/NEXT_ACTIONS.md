@@ -43,8 +43,9 @@ All craft-polish items are now done. Candidate next work (pick one per cycle,
 smallest honest increment first):
 - True-device spot check on real iOS/Android hardware (needs a phone — blocked
   on owner; skip until available).
-- Content pass: re-read all division copy for tone drift / repetition; tighten
-  weakest paragraph.
+- ~~Content pass: re-read all division copy for tone drift / repetition;
+  tighten weakest paragraph~~ DONE (session 15 — Global Network / Night City
+  block rewritten; rest judged consistent).
 - Lighthouse audit (perf/a11y/SEO) on the live site; fix the top finding.
 
 ## Autonomous protocol
