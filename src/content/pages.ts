@@ -195,7 +195,7 @@ export const GLOBAL: PageData = {
     {
       label: 'Night City',
       title: 'Pacific operations',
-      body: 'A theater of concentrated corporate presence, secured infrastructure, and strategic response.',
+      body: 'The corporation’s deepest presence abroad, held street by street. What Tokyo decides, Night City demonstrates.',
     },
     {
       label: 'Orbital',

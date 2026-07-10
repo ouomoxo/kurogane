@@ -1,0 +1,1 @@
+import{w as o,o as n}from"./chunk-KS7C4IRE-CGqfcxTo.js";import{P as a,a as t}from"./pages-Dvouo7F3.js";import"./env-CoG3rk47.js";function m(){return[{title:"Contact — ARASAKA"},{name:"description",content:t.lede}]}const c=o(function(){return n.jsx(a,{data:t})});export{c as default,m as meta};
