@@ -126,3 +126,25 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
 - Gates: `npm run build` clean (tsc + prerender + postbuild); /corporation
   scene band screenshot inspected (era hierarchy, material separation, dais
   inlay all read). Remaining in item 0: archive, network.
+
+## Session 8 — Temple language propagation 2/3: Continuity archive (2026-07-11)
+- NEXT_ACTIONS item 0, ASSET_AUDIT order: archive (placeholder) second.
+- Archive rebuilt in the Data Temple language via shared world/mats.ts: nine
+  alternating obsidian/lacquer records separated by glass interlayers carrying
+  ember seams; the record under review drawn out on its glass runner, lip
+  burning core-red (animated) with a steel pull-marker; ceramic registry tags
+  catalog every record face; gunmetal pylons with ember index lights rail the
+  stack beneath a gunmetal capital; ceramic dais over gunmetal skirt with
+  ember inlay + steel rim markers (hero/colonnade dais language).
+- Local tuning documented in-code: ember 0.65 not 0.9 — this object carries
+  eight seams, at 0.9 it read as red stripes instead of stacked records;
+  registry tags ceramic not gunmetal (gunmetal vanishes on obsidian head-on);
+  base rotation -0.19 so record faces catch the front fill.
+- Iteration caught via renders: v1 rotated -0.42 read as a black monolith
+  with red stripes (faces off-light, embers over-counted); two SwiftShader
+  blank-frame flakes (known 1-in-3) retried; v3 shipped after comparison
+  against the shipped colonnade band for dais/value consistency.
+- Gates: `npm run build` clean (tsc + prerender + postbuild); /continuity
+  scene band screenshot inspected (catalog tags, drawn-record hierarchy,
+  material separation all read); CI deploy + live route verify green
+  (run 29103800338). Remaining in item 0: network.
