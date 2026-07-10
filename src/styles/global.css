@@ -253,6 +253,45 @@ button {
 .nav__bars.is-open i:nth-child(1) { transform: translateY(4px) rotate(45deg); }
 .nav__bars.is-open i:nth-child(2) { transform: translateY(-4px) rotate(-45deg); }
 
+/* ── Sound toggle ── */
+.snd {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.snd .mono {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--ash);
+  transition: color var(--t-ui);
+}
+.snd--on .mono { color: var(--white-dim); }
+.snd__bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 10px;
+}
+.snd__bars i {
+  width: 2px;
+  height: 3px;
+  background: var(--ash);
+  transition: background var(--t-ui);
+}
+.snd--on .snd__bars i {
+  background: var(--red);
+  animation: snd-lv 1.1s ease-in-out infinite;
+}
+.snd--on .snd__bars i:nth-child(2) { animation-delay: 0.22s; }
+.snd--on .snd__bars i:nth-child(3) { animation-delay: 0.44s; }
+@keyframes snd-lv {
+  0%, 100% { height: 3px; }
+  50% { height: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .snd--on .snd__bars i { animation: none; height: 8px; }
+}
+
 /* ── Divisions overlay ── */
 .menu {
   position: fixed;

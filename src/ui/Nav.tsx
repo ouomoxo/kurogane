@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router'
 import { NAV } from '../content/site'
+import { SoundToggle } from './SoundToggle'
 
 // Persistent, restrained navigation. Identity left, divisions in an overlay,
 // access status right. Transforms from transparent to solid on scroll. The
@@ -84,6 +85,7 @@ export function Nav() {
           <span className="nav__status mono">
             <span className="dot" /> Node TYO-000
           </span>
+          <SoundToggle />
           <button ref={toggleRef} className="nav__toggle" onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-label="Divisions menu">
             <span className="mono">{open ? 'Close' : 'Divisions'}</span>
             <span className={`nav__bars${open ? ' is-open' : ''}`} aria-hidden>
