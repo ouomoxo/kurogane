@@ -21,9 +21,13 @@
    real iOS/Android hardware remains a nice-to-have (needs a phone).
 
 ## Craft polish
-- Hero title/monolith composition: nudge overlay so display type clears the object.
+- ~~Hero title/monolith composition: nudge overlay so display type clears the
+  object~~ DONE (session 11 — temple offset right + rescaled, title clamp
+  reduced; validated 1440/1920/390).
 - Custom cursor + hover telemetry flavor on precision pointers.
 - Loading state / first-paint choreography.
+- Compact (390) hero: subtle scrim behind the paragraph where it crosses the
+  bright dais — readable today but low margin.
 
 ## Autonomous protocol
 Main-session cron re-enters this file each cycle, picks the top undone item,

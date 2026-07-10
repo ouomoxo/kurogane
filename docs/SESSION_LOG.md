@@ -184,3 +184,19 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
   chrome-mobile-home and webkit-mobile-global-network re-inspected (nav,
   display type, hero monolith, and temple-language network scene all render).
 - True-device spot check on real iOS/Android hardware remains a nice-to-have.
+
+## Session 11 — Hero composition: type clears the temple (2026-07-11)
+- Craft-polish item 1: the hero display type previously collided with the
+  temple monolith at 1440. Recovered a stale interrupted cycle (lock >45min,
+  uncommitted WIP verified rather than discarded) and finished it: temple group
+  shifted right (x 1.35 -> 2.3) and scaled 0.98 -> 0.9, float raised
+  0.55 -> 0.85 with a longer signal column (2.6 -> 3.0) keeping the dais link,
+  camera lookAt 0.9 -> 1.15, title clamp 12vw/168px -> 9.6vw/140px.
+- Added `scripts/shot-hero.mjs` (Playwright system Chrome) for 1440/1920/390
+  hero screenshots against the preview server.
+- Gates: `npm run build` clean (tsc + prerender + postbuild); screenshots
+  inspected at all three viewports — 1920 fully separated, 1440 the comma just
+  clears the signal column, 390 compact layout unchanged; deploy 72e3c3f pushed,
+  GH Actions run 29110555095 completed/success, live root 200.
+- Noted for later: 390 hero paragraph passes over the bright dais — readable
+  but low margin; consider a subtle compact-mode scrim.
