@@ -341,3 +341,6 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
   licensed from CD PROJEKT RED or R. Talsorian Games. All corporate figures
   and statements are fictional."
 - No build/deploy performed. Docs-only commit, [skip ci].
+- Addendum (03:13 KST, duplicate cron fire): independent re-check confirmed
+  the same state — CI green, all 12 routes (11 + /proto) return 200,
+  disclaimer intact. No changes.
