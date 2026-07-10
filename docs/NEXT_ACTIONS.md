@@ -1,11 +1,11 @@
 # NEXT_ACTIONS — PROJECT KUROGANE
 
 ## Priority (post-recovery)
-0. **Propagate the temple design language** to division scenes in ASSET_AUDIT
-   order — colonnade ~~(placeholder)~~ DONE (session 7); archive ~~(placeholder)~~
-   DONE (session 8: authored reliquary — records, glass interlayers, drawn
-   record with core lip, ceramic registry tags, pylons, dais); **network next**;
-   add authored seams/trims/material mix. Do NOT add new routes/sections.
+0. ~~**Propagate the temple design language** to division scenes in ASSET_AUDIT
+   order~~ DONE — colonnade (session 7), archive (session 8), network (session 9:
+   ceramic command floor, sovereignty steles, core-red command seat, ember trunk
+   lines, orbital ring). Every division scene now shares world/mats.ts. Next top
+   undone item: #7 cross-browser pass. Do NOT add new routes/sections.
 
 1. ~~Bundle split~~ DONE (route-level splitting; HeroScene now also lazy).
 2. ~~Per-division 3D accents~~ DONE — lattice / nodes / archive / network scenes.

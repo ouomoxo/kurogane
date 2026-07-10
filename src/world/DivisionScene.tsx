@@ -227,45 +227,107 @@ function Archive() {
   )
 }
 
-/* GLOBAL NETWORK — sovereign zones as architecture, not a stock globe. A dark
-   operational disc, regional pillars, one red seat of command, an orbital ring. */
+/* GLOBAL NETWORK — sovereign zones as architecture in the Data Temple language,
+   not a stock globe. A ceramic command floor over a gunmetal skirt; six regional
+   sovereignty steles (steel plinth, obsidian/lacquer shaft split by a glass
+   stratum with an ember seam, gunmetal capital) ring a single red seat of
+   command at the centre. Ember trunk lines are inlaid from the seat out to each
+   zone; steel rim markers and a gunmetal orbital ring seal the floor. Governance
+   rendered as an authored institution, sharing the hero's whole material set. */
 function Network() {
+  const mats = useHeroMats()
   const group = useRef<THREE.Group>(null!)
-  const tyo = useRef<THREE.MeshStandardMaterial>(null!)
-  const sites: { x: number; z: number; h: number; red?: boolean }[] = [
-    { x: 1.7, z: -0.3, h: 1.6, red: true },
-    { x: -1.9, z: 0.5, h: 1.15 },
-    { x: -0.6, z: -1.4, h: 0.85 },
-    { x: 0.6, z: 1.5, h: 0.95 },
-    { x: -1.2, z: -0.4, h: 0.6 },
-    { x: 0.2, z: -0.9, h: 0.7 },
-    { x: 1.0, z: 0.8, h: 0.55 },
-  ]
+  // Deterministic sovereign zones — radius, angle, height. An institution does
+  // not redraw its map on each visit. The command seat holds the centre.
+  const zones = useMemo(() => {
+    const rng = mulberry32(19)
+    return Array.from({ length: 6 }, (_, i) => {
+      const a = (i / 6) * Math.PI * 2 + 0.42
+      const r = 1.7 + rng() * 0.75
+      return { x: Math.cos(a) * r, z: Math.sin(a) * r, r, h: 0.82 + rng() * 0.5, i }
+    })
+  }, [])
+  // Same local tuning as the colonnade/archive: darkened ceramic, brighter seam,
+  // for the hotter bloomless division rig.
+  useLayoutEffect(() => {
+    mats.ceramic.color.set('#9b978d')
+    mats.ember.emissiveIntensity = 0.85
+  }, [mats])
   useFrame(({ clock }) => {
     const t = clock.elapsedTime
-    group.current.rotation.y = t * 0.07
-    tyo.current.emissiveIntensity = 1.8 + Math.sin(t * 1.1) * 0.5
+    group.current.rotation.y = t * 0.05
+    mats.core.emissiveIntensity = 2.6 + Math.sin(t * 0.9) * 0.7
   })
-  return (
-    <group ref={group} rotation={[0.08, 0, 0]} position={[0, -0.7, 0]}>
-      <mesh position={[0, -0.05, 0]}>
-        <cylinderGeometry args={[3.1, 3.1, 0.08, 64]} />
-        <meshStandardMaterial color="#1c1e24" metalness={0.4} roughness={0.45} />
-      </mesh>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.6, 0]}>
-        <torusGeometry args={[2.7, 0.008, 8, 128]} />
-        <meshStandardMaterial color="#454955" metalness={0.6} roughness={0.35} />
-      </mesh>
-      {sites.map((s, i) => (
-        <mesh key={i} position={[s.x, s.h / 2, s.z]}>
-          <boxGeometry args={[0.14, s.h, 0.14]} />
-          {s.red ? (
-            <meshStandardMaterial ref={tyo} color="#1a0202" emissive="#e10600" emissiveIntensity={1.8} roughness={0.35} />
-          ) : (
-            <meshStandardMaterial color="#33363f" metalness={0.5} roughness={0.3} />
-          )}
+  // One authored stele — plinth, split shaft with a seam of signal, capital.
+  const stele = (h: number, shaft: THREE.Material, seam: THREE.Material, w: number) => {
+    const lower = h * 0.58
+    const strata = 0.12
+    const upper = h - lower - strata
+    return (
+      <>
+        <mesh material={mats.steel} position={[0, 0.05, 0]}>
+          <boxGeometry args={[w + 0.16, 0.1, w + 0.16]} />
         </mesh>
+        <mesh material={shaft} position={[0, 0.1 + lower / 2, 0]}>
+          <boxGeometry args={[w, lower, w]} />
+        </mesh>
+        <mesh material={mats.glass} position={[0, 0.1 + lower + strata / 2, 0]}>
+          <boxGeometry args={[w - 0.04, strata, w - 0.04]} />
+        </mesh>
+        <mesh material={seam} position={[0, 0.1 + lower + strata / 2, 0]}>
+          <boxGeometry args={[w + 0.03, 0.05, w + 0.03]} />
+        </mesh>
+        <mesh material={shaft} position={[0, 0.1 + lower + strata + upper / 2, 0]}>
+          <boxGeometry args={[w - 0.02, upper, w - 0.02]} />
+        </mesh>
+        <mesh material={mats.gunmetal} position={[0, 0.1 + h + 0.035, 0]}>
+          <boxGeometry args={[w + 0.08, 0.07, w + 0.08]} />
+        </mesh>
+      </>
+    )
+  }
+  return (
+    <group ref={group} rotation={[0.08, 0, 0]} position={[0, -1.05, 0]}>
+      {/* ember trunk lines — the seat's writ, inlaid from centre to each zone */}
+      {zones.map((z) => (
+        <group key={`t${z.i}`} rotation={[0, -Math.atan2(z.z, z.x), 0]}>
+          <mesh material={mats.ember} position={[z.r / 2, 0.106, 0]}>
+            <boxGeometry args={[z.r, 0.012, 0.03]} />
+          </mesh>
+        </group>
       ))}
+      {/* the red seat of command at the centre */}
+      <group position={[0, 0, 0]}>{stele(1.55, mats.obsidian, mats.core, 0.4)}</group>
+      {/* regional sovereignty steles */}
+      {zones.map((z) => (
+        <group key={z.i} position={[z.x, 0, z.z]}>
+          {stele(z.h, z.i % 2 ? mats.obsidian : mats.lacquer, mats.ember, 0.3)}
+          {/* ember node pad seating each zone on the floor */}
+          <mesh material={mats.ember} position={[0, 0.104, 0.28]}>
+            <boxGeometry args={[0.34, 0.01, 0.03]} />
+          </mesh>
+        </group>
+      ))}
+      {/* ceramic command floor over gunmetal skirt */}
+      <mesh material={mats.ceramic} position={[0, 0.01, 0]}>
+        <cylinderGeometry args={[3.0, 3.0, 0.18, 72]} />
+      </mesh>
+      <mesh material={mats.gunmetal} position={[0, -0.16, 0]}>
+        <cylinderGeometry args={[3.28, 3.16, 0.16, 72]} />
+      </mesh>
+      {/* steel rim markers, spaced around the floor's edge */}
+      {Array.from({ length: 12 }, (_, i) => {
+        const a = (i / 12) * Math.PI * 2
+        return (
+          <mesh key={`m${i}`} material={mats.steel} position={[Math.cos(a) * 2.82, 0.105, Math.sin(a) * 2.82]} rotation={[0, -a, 0]}>
+            <boxGeometry args={[0.05, 0.014, 0.16]} />
+          </mesh>
+        )
+      })}
+      {/* gunmetal orbital ring above the floor — the network's sovereign envelope */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 1.85, 0]} material={mats.gunmetal}>
+        <torusGeometry args={[2.6, 0.012, 10, 128]} />
+      </mesh>
     </group>
   )
 }

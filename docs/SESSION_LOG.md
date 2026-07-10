@@ -148,3 +148,24 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
   scene band screenshot inspected (catalog tags, drawn-record hierarchy,
   material separation all read); CI deploy + live route verify green
   (run 29103800338). Remaining in item 0: network.
+
+## Session 9 — Temple language propagation 3/3: Global Network (2026-07-11)
+- NEXT_ACTIONS item 0, ASSET_AUDIT order: network (placeholder) last. Completes
+  the temple-language pass across every division scene.
+- Network rebuilt in the Data Temple language via shared world/mats.ts, replacing
+  the old generic disc + raw-material pillars + hairline torus (the last scene
+  still outside the shared palette). New composition: a ceramic command floor
+  over a gunmetal skirt; six deterministic sovereignty steles (steel plinth,
+  obsidian/lacquer shaft split by a glass stratum + ember seam, gunmetal capital)
+  ring a single red seat of command whose seam burns core-red (animated); ember
+  trunk lines inlaid from the seat out to each zone; ember node pads seat each
+  zone; twelve steel rim markers ring the floor's edge; a gunmetal orbital ring
+  seals the envelope above.
+- Local tuning matches colonnade/archive: ceramic darkened to #9b978d, ember 0.85
+  for the hotter bloomless division rig; disc tilt 0.08 preserved for the 3/4
+  read; slow 0.05 spin — an institution does not improvise. Zones seeded via
+  mulberry32(19) so the map is identical on every visit.
+- Gates: `npm run build` clean (tsc + prerender + postbuild); /global-network
+  scene band screenshot inspected at 1400x1750 — command floor, radiating red
+  trunk lines, central core-red seat, ringed steles, rim markers and orbital
+  ring all read and separate in value. Item 0 (temple propagation) now DONE.
