@@ -38,6 +38,7 @@ export const CORPORATION: PageData = {
 
 export const SECURITY: PageData = {
   code: 'DIV-02',
+  scene: 'lattice',
   eyebrow: 'Security',
   title: 'Peace through deterrence',
   jp: '警備部門 · 抑止と防衛',
@@ -71,6 +72,7 @@ export const SECURITY: PageData = {
 
 export const INTELLIGENCE: PageData = {
   code: 'DIV-03',
+  scene: 'nodes',
   eyebrow: 'Intelligence',
   title: 'Visibility is control',
   jp: '情報部門 · 可視性と予測',
@@ -136,6 +138,7 @@ export const ADVANCED: PageData = {
 
 export const CONTINUITY: PageData = {
   code: 'DIV-05',
+  scene: 'archive',
   eyebrow: 'Continuity',
   title: 'Legacy is no longer limited by biology',
   jp: '継承部門 · 記憶と継続',
@@ -169,6 +172,7 @@ export const CONTINUITY: PageData = {
 
 export const GLOBAL: PageData = {
   code: 'DIV-06',
+  scene: 'network',
   eyebrow: 'Global Network',
   title: 'Operating above geography',
   jp: '世界網 · 主権区域',

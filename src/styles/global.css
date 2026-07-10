@@ -646,3 +646,63 @@ button {
   max-width: 90ch;
   font-size: 10.5px;
 }
+
+/* ── Division 3D band ── */
+.page__scene {
+  height: min(56vh, 560px);
+  border-bottom: 1px solid var(--hair);
+  position: relative;
+  background: radial-gradient(80% 100% at 50% 100%, rgba(30, 32, 40, 0.35), transparent 60%), var(--void-1);
+}
+.page__scene canvas { display: block; width: 100% !important; height: 100% !important; }
+
+/* ── Governance band (SEQ-08) ── */
+.gov-band {
+  padding-block: clamp(80px, 14vh, 170px);
+  background: var(--void-1);
+  border-bottom: 1px solid var(--hair);
+}
+.gov-band__meta { margin-bottom: 14px; }
+.gov-band__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0 32px;
+  margin-top: 38px;
+  border-top: 1px solid var(--hair);
+}
+.gov-band .seq__link { margin-top: 26px; }
+
+/* ── Precision cursor ── */
+.cur-on,
+.cur-on a,
+.cur-on button { cursor: none; }
+.cur-dot {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 200;
+  opacity: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--red);
+  pointer-events: none;
+}
+.cur-ring {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 200;
+  opacity: 0;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(207, 205, 198, 0.35);
+  border-radius: 50%;
+  pointer-events: none;
+  transition: width var(--t-ui) var(--e-out), height var(--t-ui) var(--e-out), border-color var(--t-ui);
+}
+.cur-ring.is-act {
+  width: 44px;
+  height: 44px;
+  border-color: var(--red);
+}

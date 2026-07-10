@@ -1,13 +1,16 @@
 # NEXT_ACTIONS — PROJECT KUROGANE
 
 ## Priority
-1. ~~Bundle split~~ DONE via RR7 route-level code splitting (three.js confined to
-   the Home chunk; division pages ~280 KB). Optional further win: lazy-load
-   HeroScene within Home so hero copy paints before WebGL parses.
-2. **Per-division 3D accents** — a distinct restrained procedural motif per route
-   (security lattice, intelligence point-field, continuity archive slab).
-3. **Homepage depth** — realize sequences 5 & 7 as in-page scenes, not just index.
+1. ~~Bundle split~~ DONE (route-level splitting; HeroScene now also lazy).
+2. ~~Per-division 3D accents~~ DONE — lattice / nodes / archive / network scenes.
+3. ~~Homepage sequence depth~~ DONE — SEQ-01…09 complete (advanced systems,
+   global network, governance band added).
 4. **Focus trap** in the divisions overlay; return focus to toggle on close.
+5. **Corporation & Advanced Systems visual concepts** — editorial-only today;
+   give /corporation an archival timeline treatment and /advanced-systems a
+   precision-hardware motif.
+6. **Sound toggle** (optional, muted by default, original tones only).
+7. **Cross-browser pass** — Safari/Firefox desktop + iOS/Android verification.
 
 ## Craft polish
 - Hero title/monolith composition: nudge overlay so display type clears the object.

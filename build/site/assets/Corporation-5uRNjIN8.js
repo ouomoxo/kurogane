@@ -1,1 +1,0 @@
-import{w as t,o as r}from"./chunk-KS7C4IRE-CMluonXo.js";import{P as n,c as o}from"./pages-Bp3HTbq3.js";function s(){return[{title:"The Corporation — ARASAKA"},{name:"description",content:o.lede}]}const p=t(function(){return r.jsx(n,{data:o})});export{p as default,s as meta};

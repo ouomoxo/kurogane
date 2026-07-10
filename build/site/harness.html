@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+<head><style>html,body{margin:0;padding:0;background:#000}iframe{display:block;border:0;width:1440px;height:900px}</style></head>
+<body>
+<iframe id="f" src="/kurogane/"></iframe>
+<script>
+  const y = parseInt(new URLSearchParams(location.search).get('y') || '0', 10)
+  const f = document.getElementById('f')
+  f.addEventListener('load', () => {
+    setTimeout(() => { f.contentWindow.scrollTo(0, y) }, 2500)
+  })
+</script>
+</body>
+</html>

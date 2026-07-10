@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router'
-import { HeroScene } from '../world/HeroScene'
-import { HERO, CLOSING, SEQUENCES, NAV } from '../content/site'
+import { HERO, CLOSING, SEQUENCES, NAV, GOV } from '../content/site'
 import { detectWebGL, prefersReducedMotion, performanceTier, sessionClass } from '../lib/env'
+
+// The hero WebGL bundle (three.js) loads after the prerendered copy paints.
+const HeroScene = lazy(() => import('../world/HeroScene').then((m) => ({ default: m.HeroScene })))
 
 export function meta() {
   return [
@@ -49,7 +51,8 @@ export default function HomeRoute() {
       ticking = true
       requestAnimationFrame(() => {
         const h = window.innerHeight || 1
-        scrollY.current = Math.min(window.scrollY / h, 1)
+        // Arc spans ~1.6 viewports so the monolith keeps decompiling as it exits
+        scrollY.current = Math.min(window.scrollY / (h * 1.6), 1)
         ticking = false
       })
     }
@@ -88,7 +91,9 @@ export default function HomeRoute() {
       <section className="hero">
         <div className="hero__stage">
           {env?.webgl ? (
-            <HeroScene tier={env.tier} reducedMotion={env.reducedMotion} scrollY={scrollY} />
+            <Suspense fallback={<div className="hero__fallback" aria-hidden />}>
+              <HeroScene tier={env.tier} reducedMotion={env.reducedMotion} scrollY={scrollY} />
+            </Suspense>
           ) : (
             <div className="hero__fallback" aria-hidden />
           )}
@@ -147,6 +152,29 @@ export default function HomeRoute() {
           </section>
         ))}
       </div>
+
+      {/* SEQ-08 — Governance & investor confidence */}
+      <section ref={addReveal} className="gov-band reveal">
+        <div className="wrap">
+          <div className="seq__meta gov-band__meta">
+            <span className="mono seq__code">SEQ-08</span>
+            <span className="seq__rule" />
+            <span className="mono">{GOV.eyebrow}</span>
+          </div>
+          <h2 className="seq__title display">{GOV.title}</h2>
+          <div className="gov-band__grid">
+            {GOV.stats.map((st) => (
+              <div key={st.k} className="page__stat">
+                <div className="page__stat-v display">{st.v}</div>
+                <div className="mono">{st.k}</div>
+              </div>
+            ))}
+          </div>
+          <Link to="/investors" className="seq__link mono">
+            Access investor relations →
+          </Link>
+        </div>
+      </section>
 
       {/* Division index — the whole system at a glance */}
       <section ref={addReveal} className="index-band reveal">

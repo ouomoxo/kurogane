@@ -33,3 +33,29 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
 - CI: .github/workflows/deploy.yml — build (SHA-stamped) → publish gh-pages →
   verify job asserts every route live, fresh, branded; 404 checked.
 - Ops: single-writer lock protocol for cron cycles (D-010).
+
+## Session 3 — Division 3D scenes + 9-sequence homepage (2026-07-10)
+- Objective: directive Phases 4–6 increment — distinct visual concept per key
+  division; complete the homepage narrative sequence count; perf + micro-interaction.
+- New src/world/DivisionScene.tsx (lazy chunk): four procedural concepts —
+  security interception lattice (124 instanced sentinels around a pulsing red
+  core), intelligence node-field (deterministic 88-node cloud, nearest-neighbour
+  paths, one classified signal), continuity archive (stacked strata, one record
+  pulled with lit red edge), global network (operational disc, regional pillars,
+  red sovereign seat, orbital ring). Shared front-fill + env lighting; no
+  postprocessing to keep bands cheap.
+- Page shell renders the band only when `scene` set + WebGL + motion allowed;
+  prerendered HTML never includes it.
+- Homepage: added SEQ-05 Advanced Systems and SEQ-07 Global Network sequences,
+  SEQ-08 governance/investor band (restrained stats, no racing counters) —
+  narrative now runs SEQ-01…09. Hero scroll arc extended to ~1.6 viewports.
+- HeroScene now lazy: hero copy paints before the three.js chunk parses.
+- Custom precision cursor (red point + damped ring, widens over interactives);
+  hidden on touch/reduced-motion; invisible until first pointer move (defect
+  caught in headless screenshots: initial-position artifacts).
+- Defect found & fixed: division materials unreadable (albedo too low under
+  ACES + no env) → Lightformer env + front fill + raised albedo. Verified by
+  repeated headless captures (SwiftShader capture itself is flaky; multiple
+  shots taken; live GPU rendering unaffected).
+- Gates: tsc + prerender build clean; screenshots of security / intelligence /
+  continuity / global-network inspected.

@@ -1,5 +1,6 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router'
 import { Nav } from './ui/Nav'
+import { Cursor } from './ui/Cursor'
 import { Footer } from './ui/Footer'
 import './styles/global.css'
 
@@ -44,6 +45,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function Root() {
   return (
     <>
+      <Cursor />
       <Nav />
       <Outlet />
       <Footer />

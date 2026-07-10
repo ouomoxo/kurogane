@@ -86,6 +86,17 @@ export const SEQUENCES: Sequence[] = [
     ],
   },
   {
+    id: 'advanced-systems',
+    code: 'SEQ-05',
+    eyebrow: 'Advanced Systems',
+    title: 'Designed beyond hesitation',
+    jp: '躊躇なき精密',
+    body: [
+      'Precision robotics, secure identity hardware, and neural integration — machines built to exceed the moment a person would pause.',
+      'Judgment is auditable after the fact. Never negotiated during it.',
+    ],
+  },
+  {
     id: 'continuity',
     code: 'SEQ-06',
     eyebrow: 'Continuity',
@@ -96,7 +107,30 @@ export const SEQUENCES: Sequence[] = [
       'Cognitive archives, secured identity, and controlled succession preserve what a lifetime cannot.',
     ],
   },
+  {
+    id: 'global-network',
+    code: 'SEQ-07',
+    eyebrow: 'Global Network',
+    title: 'Operating above geography',
+    jp: '地理を超えた運用',
+    body: [
+      'Nineteen sovereign corporate zones, strategic facilities on every continent, infrastructure beyond the reach of any single jurisdiction.',
+      'Borders are administrative. Continuity is not.',
+    ],
+  },
 ]
+
+// SEQ-08 — governance strip on the homepage (restrained; no racing counters).
+export const GOV = {
+  eyebrow: 'Governance · Investor Confidence',
+  title: 'Power, translated into numbers',
+  stats: [
+    { k: 'Reporting since', v: '1991' },
+    { k: 'Continuity index', v: 'AAA·L' },
+    { k: 'Sovereign zones', v: '19' },
+    { k: 'Volatility', v: 'Managed' },
+  ],
+}
 
 export const FOOTER = {
   disclaimer:

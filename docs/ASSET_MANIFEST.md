@@ -12,6 +12,9 @@ redistributed.
 
 ## 3D / imagery
 - Monolith: procedural geometry (RoundedBox/segments) + standard materials. No mesh imports.
+- Division scenes (lattice / node-field / archive / network): procedural
+  instanced boxes, buffer-geometry points/lines, cylinders, tori. No mesh,
+  texture, or audio imports; deterministic seeded PRNG for the node cloud.
 - Environment map: generated at runtime from drei `<Lightformer>` rects. No HDRI files.
 - Favicon: original inline SVG (Arasaka-style triangle mark, our own drawing).
 - No raster images ship in the bundle.

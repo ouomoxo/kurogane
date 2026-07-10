@@ -1,3 +1,9 @@
+import { Suspense, lazy, useEffect, useState } from 'react'
+import { detectWebGL, prefersReducedMotion } from '../lib/env'
+import type { SceneVariant } from '../world/DivisionScene'
+
+const DivisionScene = lazy(() => import('../world/DivisionScene'))
+
 export interface Block {
   label: string
   title: string
@@ -14,11 +20,19 @@ export interface PageData {
   classification: string
   blocks: Block[]
   index?: { k: string; v: string }[]
+  scene?: SceneVariant
 }
 
-// Shared editorial shell for every division page. One system, distinct content.
+// Shared editorial shell for every division page. One system, distinct content;
+// divisions with a `scene` get their own procedural 3D band, lazy-loaded after
+// mount so the prerendered HTML and non-WebGL clients never pay for it.
 // Scroll position on navigation is handled by <ScrollRestoration> in root.tsx.
 export function Page({ data }: { data: PageData }) {
+  const [showScene, setShowScene] = useState(false)
+  useEffect(() => {
+    setShowScene(!!data.scene && detectWebGL() && !prefersReducedMotion())
+  }, [data.scene])
+
   return (
     <main className="page">
       <div className="page__bar wrap mono">
@@ -33,6 +47,16 @@ export function Page({ data }: { data: PageData }) {
         <p className="page__jp jp">{data.jp}</p>
         <p className="lede page__lede">{data.lede}</p>
       </header>
+
+      {data.scene && (
+        <div className="page__scene" aria-hidden>
+          {showScene && (
+            <Suspense fallback={null}>
+              <DivisionScene variant={data.scene} />
+            </Suspense>
+          )}
+        </div>
+      )}
 
       {data.index && (
         <section className="wrap page__index">
