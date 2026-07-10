@@ -1,8 +1,9 @@
 # NEXT_ACTIONS — PROJECT KUROGANE
 
 ## Priority
-1. **Bundle split** — manualChunks to separate three/R3F ("world") from app shell;
-   lazy-load HeroScene so text paints before WebGL.
+1. ~~Bundle split~~ DONE via RR7 route-level code splitting (three.js confined to
+   the Home chunk; division pages ~280 KB). Optional further win: lazy-load
+   HeroScene within Home so hero copy paints before WebGL parses.
 2. **Per-division 3D accents** — a distinct restrained procedural motif per route
    (security lattice, intelligence point-field, continuity archive slab).
 3. **Homepage depth** — realize sequences 5 & 7 as in-page scenes, not just index.

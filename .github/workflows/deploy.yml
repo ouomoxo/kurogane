@@ -1,0 +1,68 @@
+name: Deploy & verify Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+        env:
+          VITE_BUILD_ID: ${{ github.sha }}
+      - name: Publish build/site to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/site
+          force_orphan: true
+
+  verify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Every route must serve directly with fresh content
+        run: |
+          set -u
+          base="https://ouomoxo.github.io/kurogane"
+          routes=("" "corporation" "security" "intelligence" "advanced-systems" "continuity" "global-network" "investors" "careers" "contact" "legal")
+          # Wait for the Pages CDN to serve this commit (marker = build meta tag)
+          echo "Waiting for build ${GITHUB_SHA} to go live..."
+          for i in $(seq 1 40); do
+            if curl -s "$base/" | grep -q "$GITHUB_SHA"; then echo "Live after ~$((i*15))s"; break; fi
+            [ "$i" = "40" ] && { echo "FAIL: deployment never went live"; exit 1; }
+            sleep 15
+          done
+          fail=0
+          for p in "${routes[@]}"; do
+            url="$base/$p"
+            code=$(curl -s -o /tmp/page.html -w '%{http_code}' "$url")
+            if [ "$code" != "200" ]; then echo "FAIL $url -> HTTP $code"; fail=1; continue; fi
+            grep -q "ARASAKA" /tmp/page.html || { echo "FAIL $url: missing brand content"; fail=1; continue; }
+            grep -q "$GITHUB_SHA" /tmp/page.html || { echo "FAIL $url: stale build"; fail=1; continue; }
+            title=$(grep -o '<title>[^<]*</title>' /tmp/page.html | head -1)
+            echo "OK  $url  $title"
+          done
+          # Unknown path must return the designed 404
+          code=$(curl -s -o /tmp/nf.html -w '%{http_code}' "$base/no-such-record")
+          if [ "$code" != "404" ] || ! grep -q "No such record exists" /tmp/nf.html; then
+            echo "FAIL 404 behavior (HTTP $code)"; fail=1
+          else
+            echo "OK  $base/no-such-record -> designed 404"
+          fi
+          exit $fail

@@ -1,24 +1,48 @@
-import { useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router'
 import { HeroScene } from '../world/HeroScene'
 import { HERO, CLOSING, SEQUENCES, NAV } from '../content/site'
-import { sessionClass } from '../lib/env'
+import { detectWebGL, prefersReducedMotion, performanceTier, sessionClass } from '../lib/env'
 
-interface HomeProps {
+export function meta() {
+  return [
+    { title: 'ARASAKA CORPORATION — Sovereignty, Secured' },
+    {
+      name: 'description',
+      content:
+        'Arasaka Corporation — a stabilizing force for institutions, infrastructure, and human continuity. Public access node. (In-universe fan concept.)',
+    },
+    { property: 'og:title', content: 'ARASAKA CORPORATION' },
+    { property: 'og:description', content: 'Sovereignty, secured. Public access node.' },
+  ]
+}
+
+interface ClientEnv {
   webgl: boolean
   tier: 'high' | 'low'
   reducedMotion: boolean
+  sc: ReturnType<typeof sessionClass>
 }
 
 // The homepage is the descent. Hero monolith, then numbered sequences that read
-// as a single institutional argument, then the closing statement. Scroll drives
-// the 3D camera through a shared ref updated on rAF-throttled scroll.
-export function Home({ webgl, tier, reducedMotion }: HomeProps) {
+// as a single institutional argument, then the closing statement. This module is
+// prerendered at build time, so anything touching window/navigator/WebGL resolves
+// after mount; the static HTML ships the designed fallback stage.
+export default function HomeRoute() {
   const scrollY = useRef(0)
   const revealRefs = useRef<HTMLElement[]>([])
+  const [env, setEnv] = useState<ClientEnv | null>(null)
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+    setEnv({
+      webgl: detectWebGL(),
+      tier: performanceTier(),
+      reducedMotion: prefersReducedMotion(),
+      sc: sessionClass(),
+    })
+  }, [])
+
+  useEffect(() => {
     let ticking = false
     const onScroll = () => {
       if (ticking) return
@@ -34,7 +58,8 @@ export function Home({ webgl, tier, reducedMotion }: HomeProps) {
   }, [])
 
   useEffect(() => {
-    if (reducedMotion) {
+    if (!env) return
+    if (env.reducedMotion) {
       revealRefs.current.forEach((el) => el?.classList.add('is-in'))
       return
     }
@@ -51,21 +76,19 @@ export function Home({ webgl, tier, reducedMotion }: HomeProps) {
     )
     revealRefs.current.forEach((el) => el && io.observe(el))
     return () => io.disconnect()
-  }, [reducedMotion])
+  }, [env])
 
   const addReveal = (el: HTMLElement | null) => {
     if (el && !revealRefs.current.includes(el)) revealRefs.current.push(el)
   }
-
-  const sc = sessionClass()
 
   return (
     <main className="home">
       {/* SEQ-01 — Arrival */}
       <section className="hero">
         <div className="hero__stage">
-          {webgl ? (
-            <HeroScene tier={tier} reducedMotion={reducedMotion} scrollY={scrollY} />
+          {env?.webgl ? (
+            <HeroScene tier={env.tier} reducedMotion={env.reducedMotion} scrollY={scrollY} />
           ) : (
             <div className="hero__fallback" aria-hidden />
           )}
@@ -84,9 +107,7 @@ export function Home({ webgl, tier, reducedMotion }: HomeProps) {
             <span>
               <span className="dot" /> {HERO.node}
             </span>
-            <span>
-              {sc.tz} · {sc.locale} · {sc.pointer}
-            </span>
+            <span>{env ? `${env.sc.tz} · ${env.sc.locale} · ${env.sc.pointer}` : 'Establishing link…'}</span>
           </div>
         </div>
 

@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-
 export interface Block {
   label: string
   title: string
@@ -19,11 +17,8 @@ export interface PageData {
 }
 
 // Shared editorial shell for every division page. One system, distinct content.
+// Scroll position on navigation is handled by <ScrollRestoration> in root.tsx.
 export function Page({ data }: { data: PageData }) {
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
-
   return (
     <main className="page">
       <div className="page__bar wrap mono">

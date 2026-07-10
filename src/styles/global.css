@@ -403,12 +403,14 @@ button {
 /* ══════════════════════════════════════════════════════════════════════
    REVEAL utility
    ══════════════════════════════════════════════════════════════════════ */
-.reveal {
+/* Hidden-until-revealed only on JS-capable clients (html.js set in root.tsx);
+   the prerendered HTML stays fully readable without JavaScript. */
+.js .reveal {
   opacity: 0;
   transform: translateY(34px);
   transition: opacity var(--t-reveal) var(--e-out), transform var(--t-reveal) var(--e-out);
 }
-.reveal.is-in {
+.js .reveal.is-in {
   opacity: 1;
   transform: none;
 }

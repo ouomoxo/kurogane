@@ -1,0 +1,1 @@
+import{w as e,o}from"./chunk-KS7C4IRE-CMluonXo.js";import{P as r,S as t}from"./pages-Bp3HTbq3.js";function s(){return[{title:"Security — ARASAKA"},{name:"description",content:t.lede}]}const u=e(function(){return o.jsx(r,{data:t})});export{u as default,s as meta};

@@ -1,0 +1,1 @@
+import{w as t,o as r}from"./chunk-KS7C4IRE-CMluonXo.js";import{P as o,C as e}from"./pages-Bp3HTbq3.js";function i(){return[{title:"Careers — ARASAKA"},{name:"description",content:e.lede}]}const m=t(function(){return r.jsx(o,{data:e})});export{m as default,i as meta};

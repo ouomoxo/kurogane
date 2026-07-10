@@ -1,0 +1,1 @@
+import{w as n,o}from"./chunk-KS7C4IRE-CMluonXo.js";import{P as e,b as t}from"./pages-Bp3HTbq3.js";function s(){return[{title:"Continuity — ARASAKA"},{name:"description",content:t.lede}]}const u=n(function(){return o.jsx(e,{data:t})});export{u as default,s as meta};

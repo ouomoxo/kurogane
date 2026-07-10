@@ -1,10 +1,10 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { reactRouter } from '@react-router/dev/vite'
 
-// Relative base: the production build must run from a project subpath
-// (GitHub Pages /project-kurogane/) or any static host without rewrites.
+// Absolute base: prerendered nested routes (e.g. /security/index.html) need
+// absolute asset URLs; the site is served from the /kurogane/ project subpath.
 export default defineConfig({
-  base: './',
-  plugins: [react()],
+  base: '/kurogane/',
+  plugins: [reactRouter()],
   build: { target: 'es2020', chunkSizeWarningLimit: 1800 },
 })
