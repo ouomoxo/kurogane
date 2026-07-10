@@ -417,6 +417,20 @@ button {
   letter-spacing: 0.2em;
 }
 .hero__lede { margin-top: 24px; }
+@media (max-width: 719px) {
+  /* Compact hero: the lede crosses the bright dais at narrow widths — give
+     the paragraph a local scrim so the copy keeps contrast without dimming
+     the whole scene. Lives on the element so it rides the boot-rise anim. */
+  .hero__lede { position: relative; }
+  .hero__lede::before {
+    content: '';
+    position: absolute;
+    inset: -18px -24px;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(ellipse 105% 115% at 50% 52%, rgba(5, 5, 5, 0.6) 42%, transparent 80%);
+  }
+}
 .hero__meta {
   display: flex;
   flex-wrap: wrap;
