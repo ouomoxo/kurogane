@@ -373,3 +373,16 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
 - Verified with scripts/shot-reset.mjs (Playwright + real Chrome): gate frame,
   ignited hero, 25%/50% scroll states, compact hero — zero console errors,
   canvas live. All five frames inspected.
+
+## Session 22 — QC RESET: Loop 01 Steps A–C (2026-07-11, no code modified)
+- Owner QC directive: evidence-gated loops, no self-certification. Framework
+  installed: QUALITY_DEFECTS.md, CURRENT_STATUS.md, ARASAKA_REFERENCE_MATRIX.md,
+  scripts/qc-observe.mjs (full viewport/scroll/interaction matrix + recording).
+- Observed DEPLOYED build 69d3737 on the live domain: 19 frames + video into
+  artifacts/review/loop-01/before/ — 2560/1920/1440 desktop, 430/390 mobile,
+  scroll 0/15/30/50/transition/reveal, gate/auth/nav/reduced-motion/no-WebGL.
+  pageerrors 0, requestfailed 0.
+- Four-role critique recorded (critique.md): 10 defects, 2 critical (D1 copy
+  yield reads as bug; D2 15–50% scroll dead zone — temple exits viewport).
+- Loop-01 decision on current build: **REJECTED.** Implementation is the next
+  cycle's Step D. Code deliberately untouched this session per directive.
