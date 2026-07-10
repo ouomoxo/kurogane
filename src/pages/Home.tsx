@@ -32,11 +32,17 @@ interface ClientEnv {
 // after mount; the static HTML ships the designed fallback stage.
 const AUTH_STEPS = ['Scanning visitor…', 'Class: External · Civilian', 'Access granted · Public node']
 
+const GATE_LINES = ['ARASAKA SECURE NETWORK', 'NODE TYO-000 · PUBLIC ACCESS LAYER', 'CLASSIFYING VISITOR…']
+
 export default function HomeRoute() {
   const scrollY = useRef(0)
   const revealRefs = useRef<HTMLElement[]>([])
+  const overlayRef = useRef<HTMLDivElement>(null)
   const [env, setEnv] = useState<ClientEnv | null>(null)
   const [auth, setAuth] = useState(0)
+  // Access threshold: 'hold' (readout running) → 'open' (panels parting) → 'done'
+  const [gate, setGate] = useState<'hold' | 'open' | 'done'>('hold')
+  const ignited = gate !== 'hold'
 
   useEffect(() => {
     setEnv({
@@ -47,9 +53,38 @@ export default function HomeRoute() {
     })
   }, [])
 
-  // Authentication sequence — restrained, text-only, skipped under reduced motion
+  // Access threshold — first visit per session only; any input skips it;
+  // reduced-motion and no-JS never see it (prerendered HTML has no gate).
   useEffect(() => {
     if (!env) return
+    if (env.reducedMotion || sessionStorage.getItem('kuro-gate')) {
+      setGate('done')
+      return
+    }
+    let opened = false
+    const open = () => {
+      if (opened) return
+      opened = true
+      sessionStorage.setItem('kuro-gate', '1')
+      setGate('open')
+      window.setTimeout(() => setGate('done'), 750)
+    }
+    const t = window.setTimeout(open, 1750)
+    const onInput = () => open()
+    window.addEventListener('keydown', onInput)
+    window.addEventListener('pointerdown', onInput)
+    window.addEventListener('wheel', onInput, { passive: true })
+    return () => {
+      window.clearTimeout(t)
+      window.removeEventListener('keydown', onInput)
+      window.removeEventListener('pointerdown', onInput)
+      window.removeEventListener('wheel', onInput)
+    }
+  }, [env])
+
+  // Authentication sequence — restrained, text-only, skipped under reduced motion
+  useEffect(() => {
+    if (!env || gate === 'hold') return
     if (env.reducedMotion) {
       setAuth(AUTH_STEPS.length - 1)
       return
@@ -61,7 +96,7 @@ export default function HomeRoute() {
       if (i >= AUTH_STEPS.length - 1) window.clearInterval(id)
     }, 950)
     return () => window.clearInterval(id)
-  }, [env])
+  }, [env, gate])
 
   useEffect(() => {
     let ticking = false
@@ -70,8 +105,14 @@ export default function HomeRoute() {
       ticking = true
       requestAnimationFrame(() => {
         const h = window.innerHeight || 1
-        // Arc spans ~1.6 viewports so the monolith keeps decompiling as it exits
+        // Arc spans ~1.6 viewports so the core keeps opening as it exits
         scrollY.current = Math.min(window.scrollY / (h * 1.6), 1)
+        // The copy is part of the machine-state: it yields as the archive opens
+        if (overlayRef.current) {
+          const f = Math.max(0, 1 - (window.scrollY / h) * 1.7)
+          overlayRef.current.style.opacity = String(f * f)
+          overlayRef.current.style.transform = `translateY(${(1 - f) * -34}px)`
+        }
         ticking = false
       })
     }
@@ -114,12 +155,12 @@ export default function HomeRoute() {
           <div className="hero__fallback" aria-hidden />
           {env?.webgl && (
             <Suspense fallback={null}>
-              <HeroScene tier={env.tier} reducedMotion={env.reducedMotion} scrollY={scrollY} />
+              <HeroScene tier={env.tier} reducedMotion={env.reducedMotion} scrollY={scrollY} ignited={ignited} />
             </Suspense>
           )}
         </div>
 
-        <div className="hero__overlay wrap">
+        <div className="hero__overlay wrap" ref={overlayRef}>
           <p className="eyebrow hero__eyebrow">{HERO.eyebrow}</p>
           <h1 className="hero__title display">
             Sovereignty,
@@ -128,6 +169,9 @@ export default function HomeRoute() {
           </h1>
           <p className="hero__jp jp">{HERO.jp}</p>
           <p className="lede hero__lede">{HERO.lede}</p>
+          <p className="hero__object mono" aria-hidden>
+            In view ▸ Continuity Core · Cognition strata ×5 · Signal TYO-000
+          </p>
           <div className="hero__meta mono">
             <span>
               <span className="dot" /> {HERO.node}
@@ -142,6 +186,23 @@ export default function HomeRoute() {
           </div>
         </div>
 
+        {env && !env.reducedMotion && gate !== 'done' && (
+          <div className={`gate${gate === 'open' ? ' gate--open' : ''}`} aria-hidden>
+            <div className="gate__panel gate__panel--l" />
+            <div className="gate__panel gate__panel--r" />
+            <div className="gate__body mono">
+              {GATE_LINES.map((l, i) => (
+                <span key={i} className="gate__line" style={{ animationDelay: `${0.15 + i * 0.4}s` }}>
+                  {l}
+                </span>
+              ))}
+              <span className="gate__bar">
+                <i />
+              </span>
+            </div>
+          </div>
+        )}
+
         <div className="hero__scroll mono" aria-hidden>
           <span>Descend</span>
           <span className="hero__scroll-line" />
@@ -154,10 +215,11 @@ export default function HomeRoute() {
           <section
             key={s.id}
             ref={addReveal}
-            className={`seq reveal seq--${i % 2 === 0 ? 'l' : 'r'}`}
+            className={`seq reveal seq--${i % 2 === 0 ? 'l' : 'r'}${i === 0 ? ' seq--first' : ''}`}
           >
             <div className="wrap seq__grid">
               <div className="seq__meta">
+                <span className="mono seq__record">{`Record ${String(i + 1).padStart(3, '0')}`}</span>
                 <span className="mono seq__code">{s.code}</span>
                 <span className="seq__rule" />
                 <span className="mono">{s.eyebrow}</span>

@@ -43,3 +43,18 @@
 - **D-012 Primitive-bar hero retired.** The 5-box monolith is deleted; the
   colonnade remains flagged placeholder in ASSET_AUDIT.md and is next in line
   for replacement with the temple's design language.
+- **D-013 RESET: machine-space staging (owner directive 2026-07-11).** Honest
+  diagnosis of why the previous slice failed despite passing scores: (1) two
+  disconnected layers — an editorial text column floating over a 3D object that
+  never referenced each other; (2) the object stood in a void — no floor, no
+  architecture, no reflections → "3D demo on black"; (3) no threshold — the
+  visitor landed on a headline like any website; (4) motion was ambient (idle
+  float + rotate — an explicit anti-pattern) instead of state-driven; (5) below
+  the fold the system died into generic editorial blocks. Correction shipped:
+  ACCESS GATE threshold (session-once, skippable, reduced-motion exempt) →
+  reflective composite floor + perimeter security columns + etched glyph (the
+  hall) → one-time ignition sequence sweeping dais→signal→strata→perimeter →
+  idle motion removed (rotation & opening are scroll-linked; camera has mass) →
+  copy yields on scroll as the archive opens → "IN VIEW ▸ CONTINUITY CORE"
+  binds text to scene → content sections reframed as RECORD 00N of one system,
+  with a red thread connecting the hero to Record 001.

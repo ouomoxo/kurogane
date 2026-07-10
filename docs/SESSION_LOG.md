@@ -357,3 +357,19 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
   present ("…not affiliated with, endorsed by, or licensed from CD PROJEKT RED
   or R. Talsorian Games. All corporate figures and statements are fictional.").
 - No source changes. Docs-only commit, [skip ci].
+
+## Session 21 — PROJECT RESET: machine-space vertical slice (2026-07-11)
+- Owner reset directive: atmosphere/identity over asset count. Diagnosis and
+  correction recorded as D-013.
+- HeroScene rewritten: MeshReflectorMaterial floor (tier-gated), 6 perimeter
+  security columns with status seams, etched Arasaka glyph on the fog wall,
+  per-part emissive channels with a sequenced ignition state machine (ignite()
+  ramp with catch-flicker), idle float/rotate removed — all motion now
+  state-driven (scroll opens strata + rotates rig; camera dolly with mass).
+- Home: ACCESS GATE threshold (readout + progress hairline + parting panels,
+  1.75s, any input skips, session-once, reduced-motion/no-JS exempt); hero copy
+  yields on scroll (opacity/lift from the scroll rAF); object-reference line;
+  sequences renumbered as RECORD 00N with a connecting thread.
+- Verified with scripts/shot-reset.mjs (Playwright + real Chrome): gate frame,
+  ignited hero, 25%/50% scroll states, compact hero — zero console errors,
+  canvas live. All five frames inspected.

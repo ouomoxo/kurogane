@@ -843,3 +843,92 @@ button {
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: none; }
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   ACCESS GATE — the threshold. Two panels part like a secure door; the
+   readout classifies the visitor. First session visit only; skippable.
+   ══════════════════════════════════════════════════════════════════════ */
+.gate {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+}
+.gate__panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50.5%;
+  background: #060607;
+  transition: transform 0.72s var(--e-inout);
+}
+.gate__panel--l { left: 0; border-right: 1px solid rgba(225, 6, 0, 0.35); }
+.gate__panel--r { right: 0; }
+.gate--open .gate__panel--l { transform: translateX(-101%); }
+.gate--open .gate__panel--r { transform: translateX(101%); }
+.gate__body {
+  position: absolute;
+  left: var(--gutter);
+  bottom: clamp(64px, 12vh, 128px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: opacity 0.3s;
+}
+.gate--open .gate__body { opacity: 0; }
+.gate__line {
+  color: var(--white-dim);
+  letter-spacing: 0.26em;
+  opacity: 0;
+  animation: gatein 0.45s var(--e-out) forwards;
+}
+.gate__line:first-child { color: var(--red); }
+@keyframes gatein {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+.gate__bar {
+  position: relative;
+  width: 210px;
+  height: 1px;
+  margin-top: 10px;
+  background: rgba(207, 205, 198, 0.14);
+  overflow: hidden;
+}
+.gate__bar i {
+  position: absolute;
+  inset: 0;
+  background: var(--red);
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: gatebar 1.75s linear forwards;
+}
+@keyframes gatebar {
+  to { transform: scaleX(1); }
+}
+
+/* text ↔ object binding line */
+.hero__object {
+  margin-top: 26px;
+  color: var(--ash-2);
+  border-left: 1px solid var(--red-deep);
+  padding-left: 10px;
+}
+
+/* the hero copy yields on scroll (driven from the scroll rAF) */
+.hero__overlay { will-change: opacity, transform; }
+
+/* RECORD prefix + the thread connecting hero to the first record */
+.seq__record { color: var(--ash-2); }
+.seq--first { position: relative; }
+.seq--first::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -56px;
+  width: 1px;
+  height: 56px;
+  background: linear-gradient(var(--red-deep), transparent);
+}
+@media (max-width: 719px) {
+  .hero__object { display: none; }
+}
