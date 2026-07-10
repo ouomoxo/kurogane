@@ -12,5 +12,6 @@ export default [
   route('careers', 'pages/Careers.tsx'),
   route('contact', 'pages/Contact.tsx'),
   route('legal', 'pages/Legal.tsx'),
+  route('proto', 'pages/ProtoHero.tsx'),
   route('*', 'pages/NotFound.tsx'),
 ] satisfies RouteConfig

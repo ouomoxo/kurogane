@@ -211,9 +211,14 @@ button {
   padding-left: 2px;
 }
 .nav__jp {
+  display: none;
   font-size: 12px;
   color: var(--ash);
   letter-spacing: 0.14em;
+  white-space: nowrap;
+}
+@media (min-width: 720px) {
+  .nav__jp { display: inline; }
 }
 .nav__right {
   display: flex;
@@ -744,4 +749,27 @@ button {
   width: 44px;
   height: 44px;
   border-color: var(--red);
+}
+
+/* ── Spatial labels (hero 3D) ── */
+.s-label {
+  color: var(--ash);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-left: 1px solid var(--red-deep);
+  padding-left: 9px;
+  opacity: 0.75;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Authentication readout ── */
+.auth {
+  animation: authin 0.5s var(--e-out);
+}
+@keyframes authin {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
 }

@@ -20,5 +20,6 @@ export default {
     '/contact',
     '/legal',
     '/404',
+    '/proto',
   ],
 } satisfies Config

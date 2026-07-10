@@ -32,3 +32,14 @@
   touching the tree and release it when done; a cycle that finds a fresh lock
   skips instead of writing concurrently. Deploys happen only via CI (D-009),
   so local cycles never race each other on gh-pages either.
+- **D-011 Hero direction: Data Temple.** Three materially different directions
+  were built and rendered on identical cinematography (/proto?v=a|b|c):
+  A Corporate Reliquary (8.5 — strong vertical rhythm, soft crown), B Sovereign
+  Defense Core (7.5 — engineering logic present but muddled top silhouette,
+  underlit), C Data Temple (9 — unmistakable inverted-ziggurat silhouette, red
+  strata bleed, ceramic dais, direct expression of "ancient institutional power
+  through post-human technology"). C chosen on rendered evidence; corrections
+  applied (dais exposure, framing, authored panel seams/indicators/markers).
+- **D-012 Primitive-bar hero retired.** The 5-box monolith is deleted; the
+  colonnade remains flagged placeholder in ASSET_AUDIT.md and is next in line
+  for replacement with the temple's design language.

@@ -1,6 +1,10 @@
 # NEXT_ACTIONS — PROJECT KUROGANE
 
-## Priority
+## Priority (post-recovery)
+0. **Propagate the temple design language** to division scenes in ASSET_AUDIT
+   order: colonnade (placeholder) first, then archive/network; add authored
+   seams/trims/material mix to each. Do NOT add new routes/sections.
+
 1. ~~Bundle split~~ DONE (route-level splitting; HeroScene now also lazy).
 2. ~~Per-division 3D accents~~ DONE — lattice / nodes / archive / network scenes.
 3. ~~Homepage sequence depth~~ DONE — SEQ-01…09 complete (advanced systems,

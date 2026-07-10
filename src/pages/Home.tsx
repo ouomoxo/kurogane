@@ -30,10 +30,13 @@ interface ClientEnv {
 // as a single institutional argument, then the closing statement. This module is
 // prerendered at build time, so anything touching window/navigator/WebGL resolves
 // after mount; the static HTML ships the designed fallback stage.
+const AUTH_STEPS = ['Scanning visitor…', 'Class: External · Civilian', 'Access granted · Public node']
+
 export default function HomeRoute() {
   const scrollY = useRef(0)
   const revealRefs = useRef<HTMLElement[]>([])
   const [env, setEnv] = useState<ClientEnv | null>(null)
+  const [auth, setAuth] = useState(0)
 
   useEffect(() => {
     setEnv({
@@ -43,6 +46,22 @@ export default function HomeRoute() {
       sc: sessionClass(),
     })
   }, [])
+
+  // Authentication sequence — restrained, text-only, skipped under reduced motion
+  useEffect(() => {
+    if (!env) return
+    if (env.reducedMotion) {
+      setAuth(AUTH_STEPS.length - 1)
+      return
+    }
+    let i = 0
+    const id = window.setInterval(() => {
+      i += 1
+      setAuth(i)
+      if (i >= AUTH_STEPS.length - 1) window.clearInterval(id)
+    }, 950)
+    return () => window.clearInterval(id)
+  }, [env])
 
   useEffect(() => {
     let ticking = false
@@ -112,7 +131,13 @@ export default function HomeRoute() {
             <span>
               <span className="dot" /> {HERO.node}
             </span>
-            <span>{env ? `${env.sc.tz} · ${env.sc.locale} · ${env.sc.pointer}` : 'Establishing link…'}</span>
+            <span className="auth" key={auth}>
+              {env
+                ? auth < AUTH_STEPS.length - 1
+                  ? AUTH_STEPS[auth]
+                  : `${AUTH_STEPS[auth]} · ${env.sc.tz} · ${env.sc.pointer}`
+                : 'Establishing link…'}
+            </span>
           </div>
         </div>
 

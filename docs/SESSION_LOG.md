@@ -88,3 +88,23 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
   screenshot inspected via headless Chrome — toggle renders correctly in muted
   state between node status and Divisions; CI deploy + live route verify green
   (run 29101633384).
+
+## Session 6 — QUALITY RECOVERY PASS: hero vertical slice (2026-07-11)
+- Owner directive: freeze expansion; reclassify honestly (ASSET_AUDIT.md);
+  rebuild one production-quality vertical slice; three hero directions compared.
+- Built /proto comparison stage (noindex) + three directions on identical
+  cinematography: Reliquary / Defense Core / Data Temple. All three rendered
+  and inspected; C chosen on visual evidence (D-011).
+- Production hero rebuilt around the Data Temple: scroll-separating strata,
+  glass interlayers, emissive seams, ceramic dais + signal column, authored
+  panel trims/indicators/service markers, spatial labels (drei Html, desktop
+  pointer only), camera dolly with mass, mobile recomposition (centered, 0.78
+  scale, longer lens), reduced-motion static composition, authentication
+  readout sequence in the overlay (skipped under reduced motion).
+- Primitive 5-box monolith deleted (D-012). Shared material system extracted
+  to world/mats.ts (obsidian/lacquer/ceramic/gunmetal/steel/glass/core/ember).
+- Defects caught via renders: proto dais overexposure (ceramic albedo + bloom
+  threshold corrected), keystone crop (framing), initial invisible-canvas
+  captures diagnosed as SwiftShader capture flakiness (1-in-3), not app error.
+- Gates: tsc + prerender clean; desktop + 390px mobile hero renders inspected;
+  macro pass 3 scores recorded in QUALITY_AUDIT.md.

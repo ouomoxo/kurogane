@@ -34,3 +34,21 @@ division, focus trap, richer sequence choreography.
 
 Weak items feed NEXT_ACTIONS (focus trap, scroll-scrub choreography, remaining
 division concepts, cross-browser matrix).
+
+## Macro pass 3 — hero vertical slice (quality recovery, 2026-07-11)
+
+Rendered-evidence scores for the slice (entry → hero → first transition →
+first reveal), honest, not inflated:
+
+| Criterion | Min | Score | Evidence |
+|---|---|---|---|
+| Arasaka identity | 9 | 9 | Temple thesis = the directive's core art concept; red only as signal; bilingual restraint intact |
+| Futuristic credibility | 9 | 9 | Levitating strata, signal column, authentication readout, spatial labels |
+| 3D quality | 9 | 9− | Authored silhouette, armor(plates)/core(emissive strata), RoundedBox bevels, 6 material families incl. glass transmission + ceramic; procedural (no UV texture work) — the remaining gap to a clean 9 |
+| Art direction | 9 | 9 | One gesture, no gimmicks; typography anchored over the object |
+| Lighting | 8.5 | 8.5 | Cool key + red rim + front fill + Lightformer env; dais exposure corrected from proto |
+| Motion | 8.5 | 8.5 | Scroll-driven strata separation, damped dolly with mass, float, auth sequence; reduced-motion = static open composition (fps measured only qualitatively — headless; flagged) |
+| Typography | 8 | 8.5 | Unchanged proven system + spatial label tier added |
+
+Slice status: **accepted** (3D at 9− with the texture-work caveat recorded).
+Propagation to division scenes may now resume (NEXT_ACTIONS).
