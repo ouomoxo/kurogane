@@ -55,8 +55,17 @@ smallest honest increment first):
   JetBrains Mono variable woff2 latin+latin-ext; Zen Kaku Gothic New
   pyftsubset to kana + 82 used kanji, 2.3 MB→33 KB per weight; zero
   third-party requests remain).
-- Optional: re-measure Lighthouse on real-GPU Chrome (not swiftshader) to
-  quantify the font-self-hosting perf delta before trusting any score.
+- ~~Optional: re-measure Lighthouse on real-GPU Chrome (not swiftshader) to
+  quantify the font-self-hosting perf delta before trusting any score~~ DONE
+  (session 18 — mobile-throttled perf 0.79, desktop perf 0.97 / LCP 0.9s /
+  TBT 0ms / CLS 0; a11y/BP/SEO all 1.0. The old 0.28 was pure swiftshader
+  artifact. Real-Chrome LCP probe: hero H1 at 1.08s. Remaining sim-mobile
+  drag is the three.js chunk (113 KiB unused on first paint) — inherent to
+  the lazy HeroScene, not worth chasing).
+
+No undone items remain except the true-device spot check (blocked on owner
+hardware). Future cycles: hold steady — verify live site health (CI green,
+routes 200, disclaimer intact) and stop; do NOT invent new scope.
 
 ## Autonomous protocol
 Main-session cron re-enters this file each cycle, picks the top undone item,

@@ -309,3 +309,20 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
   woff2 serves 200.
 - Next perf step if a cycle wants it: re-measure Lighthouse on real-GPU
   Chrome to quantify the delta.
+
+## Session 18 — Real-GPU Lighthouse re-measure (2026-07-11)
+- Closed the follow-up from session 17: Lighthouse against the live site on
+  real-GPU headless Chrome (no swiftshader flags).
+  - Default (mobile-throttled sim): perf 0.79 / a11y 1.0 / BP 1.0 / SEO 1.0
+    — FCP 1.6s, LCP 3.8s(sim), TBT 340ms, CLS 0.028.
+  - Desktop preset: perf 0.97 — FCP 0.7s, LCP 0.9s, TBT 0ms, CLS 0.
+  - Session 16's perf 0.28 confirmed as pure software-GL artifact.
+- PerformanceObserver probe in real Chrome (Playwright): actual LCP is the
+  hero H1 at 1.08s; the 3.8s sim number is 4x-CPU + slow-4G throttling, and
+  the boot-rise choreography does not delay real LCP (element paints on its
+  first >0-opacity frame).
+- Only remaining sim-mobile finding: 113 KiB unused three.js in the lazy
+  mats chunk — inherent, judged not worth chasing.
+- No source changes. Gates: `npm run build` clean (tsc + prerender +
+  postbuild), preview screenshot of / inspected (hero type, JP glyphs,
+  nav intact). Docs-only commit, [skip ci].
