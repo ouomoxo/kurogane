@@ -1,7 +1,10 @@
 // Cross-engine visual verification: screenshots every route in WebKit
-// (Safari engine) and Firefox at desktop + mobile viewports against the
-// local preview server. Requires: npx playwright@1.49.1 install webkit firefox
-// Usage: node scripts/crossbrowser.mjs [--engines=webkit,firefox]
+// (Safari engine), Firefox, and system Chrome at desktop + mobile viewports
+// against the local preview server. Mobile runs use full device emulation
+// (isMobile/hasTouch/DPR) on WebKit (iOS Safari proxy) and Chrome (Android
+// proxy); Firefox gets viewport-only since Playwright Firefox has no
+// isMobile. Requires: npx playwright@1.49.1 install webkit firefox
+// Usage: node scripts/crossbrowser.mjs [--engines=webkit,firefox,chrome]
 import { mkdir } from 'node:fs/promises'
 import * as playwright from 'playwright'
 
@@ -21,18 +24,26 @@ const ROUTES = [
   ['legal', '/legal/'],
 ]
 const VIEWPORTS = [
-  ['desktop', { width: 1440, height: 900 }],
-  ['mobile', { width: 390, height: 844 }],
+  ['desktop', { viewport: { width: 1440, height: 900 } }],
+  ['mobile', {
+    viewport: { width: 390, height: 844 },
+    deviceScaleFactor: 3,
+    isMobile: true,
+    hasTouch: true,
+  }],
 ]
 
-const engines = (process.argv.find(a => a.startsWith('--engines='))?.split('=')[1] ?? 'webkit,firefox').split(',')
+const engines = (process.argv.find(a => a.startsWith('--engines='))?.split('=')[1] ?? 'webkit,firefox,chrome').split(',')
 await mkdir(OUT, { recursive: true })
 const failures = []
 
 for (const name of engines) {
-  const browser = await playwright[name].launch()
-  for (const [vpName, viewport] of VIEWPORTS) {
-    const page = await browser.newPage({ viewport })
+  const engine = name === 'chrome' ? 'chromium' : name
+  const browser = await playwright[engine].launch(name === 'chrome' ? { channel: 'chrome' } : {})
+  for (const [vpName, ctxOpts] of VIEWPORTS) {
+    // Playwright Firefox rejects isMobile; fall back to viewport-only there.
+    const opts = engine === 'firefox' ? { viewport: ctxOpts.viewport } : ctxOpts
+    const page = await browser.newPage(opts)
     const consoleErrors = []
     page.on('console', m => { if (m.type() === 'error') consoleErrors.push(m.text()) })
     page.on('pageerror', e => consoleErrors.push(String(e)))

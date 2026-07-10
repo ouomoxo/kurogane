@@ -169,3 +169,18 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
   scene band screenshot inspected at 1400x1750 — command floor, radiating red
   trunk lines, central core-red seat, ringed steles, rim markers and orbital
   ring all read and separate in value. Item 0 (temple propagation) now DONE.
+
+## Session 10 — Cross-browser pass with device emulation (2026-07-11)
+- NEXT_ACTIONS item 7: extended `scripts/crossbrowser.mjs` from WebKit/Firefox
+  viewport-only sweeps to a three-engine matrix — WebKit (iOS Safari proxy),
+  Firefox, and system Chrome (`channel: 'chrome'`, Android proxy) — with full
+  mobile device emulation (390x844, DPR 3, isMobile, hasTouch) on WebKit and
+  Chrome; Firefox falls back to viewport-only since Playwright Firefox rejects
+  isMobile.
+- Sweep: 3 engines x 2 viewports x 11 routes = 66 screenshots in
+  artifacts/crossbrowser/, zero console/page errors across the matrix.
+- Cycle was interrupted before commit; this session verified the work honestly
+  before shipping: `npm run build` re-run clean (tsc + prerender + postbuild),
+  chrome-mobile-home and webkit-mobile-global-network re-inspected (nav,
+  display type, hero monolith, and temple-language network scene all render).
+- True-device spot check on real iOS/Android hardware remains a nice-to-have.
