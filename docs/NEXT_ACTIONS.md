@@ -7,13 +7,12 @@
    global network, governance band added).
 4. ~~Focus trap~~ DONE (dialog semantics, Tab cycle, guarded focus return).
 5. ~~Corporation & Advanced Systems visual concepts~~ DONE (colonnade + gimbal).
-6. **Sound toggle** (optional, muted by default, original tones only).
+6. ~~Sound toggle~~ DONE (procedural Web Audio engine, muted by default, SND nav control).
 7. **Cross-browser pass** — Safari/Firefox desktop + iOS/Android verification.
 
 ## Craft polish
 - Hero title/monolith composition: nudge overlay so display type clears the object.
 - Custom cursor + hover telemetry flavor on precision pointers.
-- Sound design (optional, muted-by-default; original tones only).
 - Loading state / first-paint choreography.
 
 ## Autonomous protocol

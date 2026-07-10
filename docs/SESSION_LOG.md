@@ -74,3 +74,17 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
   .build-lock from an earlier cycle cleared; this session ran under its own lock.
 - Gates: tsc + prerender clean; corporation & advanced-systems screenshots
   inspected (colonnade + gimbal both read correctly).
+
+## Session 5 — Ambient sound toggle (2026-07-10, autonomous cycle)
+- Objective: NEXT_ACTIONS #6 — optional sound, muted by default, original tones.
+- New `src/sound/engine.ts`: fully procedural Web Audio — low detuned-sine drone
+  bed through a lowpass with a slow breathing LFO, plus generated-noise "air"
+  band and short bandpassed UI ticks on link/button clicks (event delegation).
+  No recorded or sampled assets anywhere; legal posture unchanged.
+- New `src/ui/SoundToggle.tsx` in the nav (SND + three level bars, red animated
+  when live; static under prefers-reduced-motion). Muted by default; stored
+  preference only re-arms on the next user gesture per browser autoplay policy.
+- Gates: `npm run build` clean (tsc + prerender + postbuild); homepage
+  screenshot inspected via headless Chrome — toggle renders correctly in muted
+  state between node status and Divisions; CI deploy + live route verify green
+  (run 29101633384).
