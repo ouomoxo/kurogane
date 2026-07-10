@@ -242,3 +242,15 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
 - Housekeeping: `.react-router/` (generated route types) gitignored.
 - Gates: `npm run build` clean (tsc + prerender + postbuild); 4
   screenshots inspected; scene live asserted; zero console/page errors.
+
+## Session 14 — Compact hero lede scrim (2026-07-11)
+- Last craft-polish item: at ≤719px the hero paragraph crosses the bright
+  dais with thin contrast (confirmed via before-screenshot of the live site
+  at 390×844). Added a local scrim — `.hero__lede::before`, a soft radial
+  gradient (`rgba(5,5,5,.6)` → transparent 80%) inset -18/-24px behind the
+  paragraph only, `z-index:-1` so it rides the boot-rise animation with the
+  text and never dims the rest of the scene. Desktop (≥720px) untouched.
+- Gates: `npm run build` clean (tsc + prerender + postbuild); before/after
+  390 + 1440 screenshots inspected via scripts/shot-hero.mjs against
+  preview (lede legible over the dais, soft non-boxy falloff, desktop
+  unchanged); CI run 29111852960 green (deploy + live-route verify).

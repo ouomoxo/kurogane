@@ -35,8 +35,17 @@
   over a persistent fallback after its first frame instead of popping;
   no-JS stays fully visible, reduced-motion clamp collapses it; validated
   via scripts/shot-boot.mjs with 4x-slowed CDP playback).
-- Compact (390) hero: subtle scrim behind the paragraph where it crosses the
-  bright dais — readable today but low margin.
+- ~~Compact (390) hero: subtle scrim behind the paragraph where it crosses the
+  bright dais~~ DONE (session 14 — `.hero__lede::before` radial scrim ≤719px,
+  rides the boot-rise anim; validated 390/1440 before/after).
+
+All craft-polish items are now done. Candidate next work (pick one per cycle,
+smallest honest increment first):
+- True-device spot check on real iOS/Android hardware (needs a phone — blocked
+  on owner; skip until available).
+- Content pass: re-read all division copy for tone drift / repetition; tighten
+  weakest paragraph.
+- Lighthouse audit (perf/a11y/SEO) on the live site; fix the top finding.
 
 ## Autonomous protocol
 Main-session cron re-enters this file each cycle, picks the top undone item,
