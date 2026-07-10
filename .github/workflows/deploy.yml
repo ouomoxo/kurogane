@@ -51,7 +51,8 @@ jobs:
           fail=0
           for p in "${routes[@]}"; do
             url="$base/$p"
-            code=$(curl -s -o /tmp/page.html -w '%{http_code}' "$url")
+            # Pages 301-redirects /route -> /route/ ; follow like a browser
+            code=$(curl -sL -o /tmp/page.html -w '%{http_code}' "$url")
             if [ "$code" != "200" ]; then echo "FAIL $url -> HTTP $code"; fail=1; continue; fi
             grep -q "ARASAKA" /tmp/page.html || { echo "FAIL $url: missing brand content"; fail=1; continue; }
             grep -q "$GITHUB_SHA" /tmp/page.html || { echo "FAIL $url: stale build"; fail=1; continue; }
