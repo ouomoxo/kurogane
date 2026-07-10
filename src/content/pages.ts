@@ -5,6 +5,7 @@ import type { PageData } from '../ui/Page'
 
 export const CORPORATION: PageData = {
   code: 'DIV-01',
+  scene: 'colonnade',
   eyebrow: 'The Corporation',
   title: 'Older than the states it serves',
   jp: '会社概要 · 継続の思想',
@@ -106,6 +107,7 @@ export const INTELLIGENCE: PageData = {
 
 export const ADVANCED: PageData = {
   code: 'DIV-04',
+  scene: 'gimbal',
   eyebrow: 'Advanced Systems',
   title: 'Designed beyond hesitation',
   jp: '先端技術部門 · 精密工学',

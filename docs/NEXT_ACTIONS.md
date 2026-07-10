@@ -5,10 +5,8 @@
 2. ~~Per-division 3D accents~~ DONE — lattice / nodes / archive / network scenes.
 3. ~~Homepage sequence depth~~ DONE — SEQ-01…09 complete (advanced systems,
    global network, governance band added).
-4. **Focus trap** in the divisions overlay; return focus to toggle on close.
-5. **Corporation & Advanced Systems visual concepts** — editorial-only today;
-   give /corporation an archival timeline treatment and /advanced-systems a
-   precision-hardware motif.
+4. ~~Focus trap~~ DONE (dialog semantics, Tab cycle, guarded focus return).
+5. ~~Corporation & Advanced Systems visual concepts~~ DONE (colonnade + gimbal).
 6. **Sound toggle** (optional, muted by default, original tones only).
 7. **Cross-browser pass** — Safari/Firefox desktop + iOS/Android verification.
 

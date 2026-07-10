@@ -59,3 +59,18 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
   shots taken; live GPU rendering unaffected).
 - Gates: tsc + prerender build clean; screenshots of security / intelligence /
   continuity / global-network inspected.
+
+## Session 4 — Corporation/Advanced scenes + focus trap (2026-07-10, continuous cadence)
+- Objective: remaining division visual concepts + overlay accessibility gate.
+- New scene variants: corporation `colonnade` (nine dark lacquer stelae on a
+  plinth, one era marked red — institutional timeline as architecture),
+  advanced-systems `gimbal` (three counter-rotating precision rings around a
+  machined red core). All six flagship divisions now carry a distinct 3D concept.
+- Divisions overlay: full keyboard focus trap — focus moves to first item on
+  open, Tab/Shift+Tab cycle inside, Escape closes, focus returns to the toggle
+  only when the overlay was actually open (guard added after catching an
+  initial-mount focus steal); role=dialog + aria-modal.
+- Ops: autonomous cadence tightened 25min → 5min per owner request; stale
+  .build-lock from an earlier cycle cleared; this session ran under its own lock.
+- Gates: tsc + prerender clean; corporation & advanced-systems screenshots
+  inspected (colonnade + gimbal both read correctly).

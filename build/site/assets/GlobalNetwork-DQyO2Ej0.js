@@ -1,0 +1,1 @@
+import{w as o,o as e}from"./chunk-KS7C4IRE-CGqfcxTo.js";import{P as r,G as t}from"./pages-DOaga9KM.js";import"./env-CoG3rk47.js";function l(){return[{title:"Global Network — ARASAKA"},{name:"description",content:t.lede}]}const m=o(function(){return e.jsx(r,{data:t})});export{m as default,l as meta};

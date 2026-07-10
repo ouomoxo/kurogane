@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router'
 import { NAV } from '../content/site'
 
@@ -9,6 +9,9 @@ export function Nav() {
   const [open, setOpen] = useState(false)
   const [solid, setSolid] = useState(false)
   const loc = useLocation()
+  const toggleRef = useRef<HTMLButtonElement>(null)
+  const menuRef = useRef<HTMLDivElement>(null)
+  const wasOpen = useRef(false)
 
   useEffect(() => {
     const onScroll = () => setSolid(window.scrollY > 40)
@@ -21,10 +24,43 @@ export function Nav() {
     setOpen(false)
   }, [loc.pathname])
 
+  // Escape closes; while open, Tab is trapped inside the overlay and focus
+  // returns to the toggle on close (WCAG 2.4.3 / no-keyboard-trap escape hatch).
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+      if (e.key === 'Tab' && open && menuRef.current) {
+        const items = menuRef.current.querySelectorAll<HTMLElement>('a[href], button')
+        if (!items.length) return
+        const first = items[0]
+        const last = items[items.length - 1]
+        const active = document.activeElement as HTMLElement | null
+        if (!menuRef.current.contains(active)) {
+          e.preventDefault()
+          first.focus()
+        } else if (e.shiftKey && active === first) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && active === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
+    }
     window.addEventListener('keydown', onKey)
     document.body.style.overflow = open ? 'hidden' : ''
+    if (open) {
+      wasOpen.current = true
+      const t = window.setTimeout(() => {
+        menuRef.current?.querySelector<HTMLElement>('a[href]')?.focus()
+      }, 60)
+      return () => {
+        window.clearTimeout(t)
+        window.removeEventListener('keydown', onKey)
+        document.body.style.overflow = ''
+      }
+    }
+    if (wasOpen.current) toggleRef.current?.focus({ preventScroll: true })
     return () => {
       window.removeEventListener('keydown', onKey)
       document.body.style.overflow = ''
@@ -48,7 +84,7 @@ export function Nav() {
           <span className="nav__status mono">
             <span className="dot" /> Node TYO-000
           </span>
-          <button className="nav__toggle" onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-label="Divisions menu">
+          <button ref={toggleRef} className="nav__toggle" onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-label="Divisions menu">
             <span className="mono">{open ? 'Close' : 'Divisions'}</span>
             <span className={`nav__bars${open ? ' is-open' : ''}`} aria-hidden>
               <i /><i />
@@ -57,7 +93,7 @@ export function Nav() {
         </div>
       </header>
 
-      <div className={`menu${open ? ' menu--open' : ''}`} aria-hidden={!open}>
+      <div ref={menuRef} className={`menu${open ? ' menu--open' : ''}`} aria-hidden={!open} role="dialog" aria-modal={open} aria-label="Secure divisions">
         <div className="menu__inner wrap">
           <div className="menu__meta mono">Secure Divisions · 部門</div>
           <nav className="menu__list">

@@ -3,7 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { Environment, Lightformer } from '@react-three/drei'
 import * as THREE from 'three'
 
-export type SceneVariant = 'lattice' | 'nodes' | 'archive' | 'network'
+export type SceneVariant = 'lattice' | 'nodes' | 'archive' | 'network' | 'colonnade' | 'gimbal'
 
 // Deterministic PRNG — the intelligence cloud must be identical on every visit;
 // an institution does not improvise.
@@ -188,6 +188,78 @@ function Network() {
   )
 }
 
+/* CORPORATION — institutional timeline as architecture. A colonnade of dark
+   lacquer stelae, one era marked in red; permanence rendered as repetition. */
+function Colonnade() {
+  const group = useRef<THREE.Group>(null!)
+  const era = useRef<THREE.MeshStandardMaterial>(null!)
+  const stelae = [1.9, 2.3, 2.0, 2.6, 2.15, 2.45, 2.05, 2.7, 2.25]
+  useFrame(({ clock }) => {
+    const t = clock.elapsedTime
+    group.current.rotation.y = Math.sin(t * 0.06) * 0.14
+    era.current.emissiveIntensity = 1.5 + Math.sin(t * 0.8) * 0.4
+  })
+  return (
+    <group ref={group} position={[0, -1.15, 0]}>
+      {stelae.map((h, i) => {
+        const x = (i - (stelae.length - 1) / 2) * 0.78
+        const isEra = i === 5
+        return (
+          <mesh key={i} position={[x, h / 2, i % 2 ? -0.3 : 0.25]}>
+            <boxGeometry args={[0.34, h, 0.5]} />
+            {isEra ? (
+              <meshStandardMaterial ref={era} color="#1a0202" emissive="#e10600" emissiveIntensity={1.5} roughness={0.35} />
+            ) : (
+              <meshStandardMaterial color="#2b2d34" metalness={0.5} roughness={0.3} />
+            )}
+          </mesh>
+        )
+      })}
+      <mesh position={[0, -0.06, 0]}>
+        <boxGeometry args={[8.4, 0.1, 2.4]} />
+        <meshStandardMaterial color="#17181d" metalness={0.4} roughness={0.45} />
+      </mesh>
+    </group>
+  )
+}
+
+/* ADVANCED SYSTEMS — precision as an object. Concentric gimbal rings in slow
+   counter-rotation around a machined core; nothing hesitates. */
+function Gimbal() {
+  const r1 = useRef<THREE.Mesh>(null!)
+  const r2 = useRef<THREE.Mesh>(null!)
+  const r3 = useRef<THREE.Mesh>(null!)
+  const core = useRef<THREE.MeshStandardMaterial>(null!)
+  useFrame(({ clock }) => {
+    const t = clock.elapsedTime
+    r1.current.rotation.x = t * 0.16
+    r2.current.rotation.y = -t * 0.12
+    r2.current.rotation.z = Math.PI / 2.4
+    r3.current.rotation.z = t * 0.09
+    core.current.emissiveIntensity = 1.7 + Math.sin(t * 1.3) * 0.5
+  })
+  return (
+    <group position={[0, 0.15, 0]} scale={1.15}>
+      <mesh ref={r1}>
+        <torusGeometry args={[2.15, 0.035, 12, 128]} />
+        <meshStandardMaterial color="#33363f" metalness={0.7} roughness={0.25} />
+      </mesh>
+      <mesh ref={r2}>
+        <torusGeometry args={[1.7, 0.03, 12, 128]} />
+        <meshStandardMaterial color="#2b2d34" metalness={0.7} roughness={0.25} />
+      </mesh>
+      <mesh ref={r3} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[1.25, 0.025, 12, 128]} />
+        <meshStandardMaterial color="#454955" metalness={0.7} roughness={0.22} />
+      </mesh>
+      <mesh>
+        <boxGeometry args={[0.5, 0.5, 0.5]} />
+        <meshStandardMaterial ref={core} color="#1a0202" emissive="#e10600" emissiveIntensity={1.7} roughness={0.4} />
+      </mesh>
+    </group>
+  )
+}
+
 function Rig() {
   useFrame(({ camera, pointer }, dt) => {
     const k = 1 - Math.pow(0.004, dt)
@@ -224,6 +296,8 @@ export default function DivisionScene({ variant }: { variant: SceneVariant }) {
       {variant === 'nodes' && <Nodes />}
       {variant === 'archive' && <Archive />}
       {variant === 'network' && <Network />}
+      {variant === 'colonnade' && <Colonnade />}
+      {variant === 'gimbal' && <Gimbal />}
     </Canvas>
   )
 }
