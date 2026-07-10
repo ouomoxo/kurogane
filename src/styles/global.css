@@ -10,7 +10,7 @@
   --white: #edece7;
   --white-dim: #cfcdc6;
   --ash: #8b8a84;
-  --ash-2: #5c5b56;
+  --ash-2: #7a7972; /* 4.58:1 on --void-1 — WCAG AA floor for muted text */
   --hair: rgba(207, 205, 198, 0.12);
   --hair-strong: rgba(207, 205, 198, 0.22);
 

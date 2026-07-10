@@ -37,7 +37,7 @@ export function SoundToggle() {
       className={`snd${on ? ' snd--on' : ''}`}
       onClick={toggle}
       aria-pressed={on}
-      aria-label={on ? 'Mute ambient sound' : 'Enable ambient sound'}
+      aria-label={on ? 'SND: mute ambient sound' : 'SND: enable ambient sound'}
       data-cur={on ? 'AUDIO BUS ▸ LIVE' : 'AUDIO BUS ▸ COLD'}
     >
       <span className="mono">SND</span>
