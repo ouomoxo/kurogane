@@ -200,3 +200,23 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
   GH Actions run 29110555095 completed/success, live root 200.
 - Noted for later: 390 hero paragraph passes over the bright dais — readable
   but low margin; consider a subtle compact-mode scrim.
+
+## Session 12 — Cursor hover telemetry (2026-07-11)
+- Craft-polish item 2 (second half): the precision cursor (session 3) now
+  carries a telemetry tag — a 9px mono core-red readout trailing the damped
+  ring that names the hovered interactive: `ACCESS ▸ /route` for internal
+  links (basename-stripped), `UPLINK ▸ host` for external, `CTRL ▸ name`
+  for buttons, with explicit `data-cur` overrides on the nav mark
+  (`HQ ▸ TYO-000`), divisions toggle (`INDEX ▸ DIVISIONS`) and sound toggle
+  (`AUDIO BUS ▸ LIVE/COLD`, re-read one frame after click so the state flip
+  shows). Tag flips left of the ring within 200px of the right viewport edge.
+- Recompute only on target change; per-frame work unchanged (one extra
+  transform write). Hidden with the rest of the cursor on touch/reduced-motion.
+- New gate script `scripts/shot-cursor.mjs` (Playwright system Chrome vs
+  preview): hovers nav mark / divisions / SND / first seq link, asserts tag
+  text, screenshots each state, clicks SND to verify COLD→LIVE. First run
+  caught a measurement flake (box read before scroll-reveal settled) — fixed
+  in the script, not the feature.
+- Gates: `npm run build` clean (tsc + prerender + postbuild); 4 hover
+  screenshots inspected (ring widens, tag reads, edge-flip correct); zero
+  console/page errors.

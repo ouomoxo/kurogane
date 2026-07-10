@@ -24,7 +24,11 @@
 - ~~Hero title/monolith composition: nudge overlay so display type clears the
   object~~ DONE (session 11 — temple offset right + rescaled, title clamp
   reduced; validated 1440/1920/390).
-- Custom cursor + hover telemetry flavor on precision pointers.
+- ~~Custom cursor + hover telemetry flavor on precision pointers~~ DONE
+  (cursor session 3; telemetry tag session 12 — mono readout trailing the ring:
+  `ACCESS ▸ /route` on links, `UPLINK ▸ host` external, `CTRL ▸ name` buttons,
+  `data-cur` overrides on nav mark / divisions / SND with live LIVE/COLD state;
+  right-edge flip; validated via scripts/shot-cursor.mjs).
 - Loading state / first-paint choreography.
 - Compact (390) hero: subtle scrim behind the paragraph where it crosses the
   bright dais — readable today but low margin.

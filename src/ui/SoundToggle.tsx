@@ -38,6 +38,7 @@ export function SoundToggle() {
       onClick={toggle}
       aria-pressed={on}
       aria-label={on ? 'Mute ambient sound' : 'Enable ambient sound'}
+      data-cur={on ? 'AUDIO BUS ▸ LIVE' : 'AUDIO BUS ▸ COLD'}
     >
       <span className="mono">SND</span>
       <span className="snd__bars" aria-hidden>

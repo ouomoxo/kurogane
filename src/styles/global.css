@@ -750,6 +750,26 @@ button {
   height: 44px;
   border-color: var(--red);
 }
+.cur-tag {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 200;
+  padding: 30px 0 0 30px;
+  color: var(--red);
+  font-size: 9px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-ui) var(--e-out);
+}
+.cur-tag.is-on { opacity: 1; }
+.cur-tag.is-flip {
+  padding: 30px 30px 0 0;
+  translate: -100% 0;
+}
 
 /* ── Spatial labels (hero 3D) ── */
 .s-label {

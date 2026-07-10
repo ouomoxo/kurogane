@@ -71,7 +71,7 @@ export function Nav() {
   return (
     <>
       <header className={`nav${solid ? ' nav--solid' : ''}`}>
-        <Link to="/" className="nav__mark" aria-label="Arasaka — home">
+        <Link to="/" className="nav__mark" aria-label="Arasaka — home" data-cur="HQ ▸ TYO-000">
           <span className="nav__glyph" aria-hidden>
             <svg viewBox="0 0 32 32" width="22" height="22">
               <path d="M16 4 L26 28 L18.5 28 L16 21 L13.5 28 L6 28 Z" fill="none" stroke="var(--red)" strokeWidth="1.4" />
@@ -86,7 +86,7 @@ export function Nav() {
             <span className="dot" /> Node TYO-000
           </span>
           <SoundToggle />
-          <button ref={toggleRef} className="nav__toggle" onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-label="Divisions menu">
+          <button ref={toggleRef} className="nav__toggle" onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-label="Divisions menu" data-cur="INDEX ▸ DIVISIONS">
             <span className="mono">{open ? 'Close' : 'Divisions'}</span>
             <span className={`nav__bars${open ? ' is-open' : ''}`} aria-hidden>
               <i /><i />
