@@ -21,7 +21,7 @@ passes acceptance. Honest reclassification:
 | Intelligence node-field | **intermediate** | acceptable as data-space abstraction; lighting flat |
 | Continuity archive | **placeholder→intermediate** | slab stack is primitive bars; silhouette weak |
 | Global network disc | **placeholder→intermediate** | pillars-on-disc = primitive bars |
-| Corporation colonnade | **placeholder** | literally the primitive-bar composition — must not ship as final |
+| Corporation colonnade | **intermediate** | reworked in temple language (session 7): authored stele stack, material separation, era seam hierarchy; still box-derived silhouettes |
 | Advanced gimbal | **intermediate** | rings read as engineered, but no mass/detail |
 
 ## Recovery plan

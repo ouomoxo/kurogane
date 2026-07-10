@@ -108,3 +108,21 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
   captures diagnosed as SwiftShader capture flakiness (1-in-3), not app error.
 - Gates: tsc + prerender clean; desktop + 390px mobile hero renders inspected;
   macro pass 3 scores recorded in QUALITY_AUDIT.md.
+
+## Session 7 — Temple language propagation 1/3: Corporation colonnade (2026-07-11)
+- NEXT_ACTIONS item 0, ASSET_AUDIT order: colonnade (placeholder) first.
+- Colonnade rebuilt in the Data Temple language via shared world/mats.ts:
+  each stele is now an authored stack — steel plinth, alternating
+  obsidian/lacquer shaft split by a glass stratum with an emissive seam,
+  gunmetal capital + face trim; one era's seam burns core-red (brighter,
+  animated) while the rest sit as dim embers. Primitive-bar floor replaced by
+  ceramic dais over gunmetal skirt with ember timeline inlay + steel markers.
+- Local material tuning documented in-code: division rig is hotter than the
+  hero rig and has no bloom, so ceramic albedo darkened (#9b978d) and seams
+  protrude past the glass faces to read without postprocessing.
+- Iteration caught via renders: v1 seams invisible (enclosed in glass, no
+  bloom); v2 capture was a SwiftShader blank-frame flake (known 1-in-3);
+  v3 ember too hot — all seams read equal, era hierarchy diluted; v4 shipped.
+- Gates: `npm run build` clean (tsc + prerender + postbuild); /corporation
+  scene band screenshot inspected (era hierarchy, material separation, dais
+  inlay all read). Remaining in item 0: archive, network.

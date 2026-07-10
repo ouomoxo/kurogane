@@ -2,6 +2,7 @@ import { useLayoutEffect, useMemo, useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Environment, Lightformer } from '@react-three/drei'
 import * as THREE from 'three'
+import { useHeroMats } from './mats'
 
 export type SceneVariant = 'lattice' | 'nodes' | 'archive' | 'network' | 'colonnade' | 'gimbal'
 
@@ -188,37 +189,81 @@ function Network() {
   )
 }
 
-/* CORPORATION — institutional timeline as architecture. A colonnade of dark
-   lacquer stelae, one era marked in red; permanence rendered as repetition. */
+/* CORPORATION — institutional timeline in the Data Temple language. Each era
+   is an authored stele: steel plinth, alternating obsidian/lacquer shaft split
+   by a glass stratum with an ember seam, gunmetal capital and edge trim. One
+   era's seam burns red. The colonnade stands on a ceramic dais over a gunmetal
+   skirt, service markers engraved on the rim — the hero's dais, elongated. */
 function Colonnade() {
+  const mats = useHeroMats()
   const group = useRef<THREE.Group>(null!)
-  const era = useRef<THREE.MeshStandardMaterial>(null!)
   const stelae = [1.9, 2.3, 2.0, 2.6, 2.15, 2.45, 2.05, 2.7, 2.25]
+  // Local tuning: this rig is hotter than the hero's and has no bloom, so the
+  // ceramic must sit darker and the seams burn brighter to read.
+  useLayoutEffect(() => {
+    mats.ceramic.color.set('#9b978d')
+    mats.ember.emissiveIntensity = 0.9
+  }, [mats])
   useFrame(({ clock }) => {
     const t = clock.elapsedTime
     group.current.rotation.y = Math.sin(t * 0.06) * 0.14
-    era.current.emissiveIntensity = 1.5 + Math.sin(t * 0.8) * 0.4
+    mats.core.emissiveIntensity = 2.6 + Math.sin(t * 0.8) * 0.7
   })
   return (
     <group ref={group} position={[0, -1.15, 0]}>
       {stelae.map((h, i) => {
         const x = (i - (stelae.length - 1) / 2) * 0.78
+        const z = i % 2 ? -0.3 : 0.25
         const isEra = i === 5
+        const shaft = i % 2 ? mats.obsidian : mats.lacquer
+        const lower = h * 0.62
+        const strata = 0.14
+        const upper = h - lower - strata
         return (
-          <mesh key={i} position={[x, h / 2, i % 2 ? -0.3 : 0.25]}>
-            <boxGeometry args={[0.34, h, 0.5]} />
-            {isEra ? (
-              <meshStandardMaterial ref={era} color="#1a0202" emissive="#e10600" emissiveIntensity={1.5} roughness={0.35} />
-            ) : (
-              <meshStandardMaterial color="#2b2d34" metalness={0.5} roughness={0.3} />
-            )}
-          </mesh>
+          <group key={i} position={[x, 0, z]}>
+            <mesh material={mats.steel} position={[0, 0.05, 0]}>
+              <boxGeometry args={[0.46, 0.1, 0.62]} />
+            </mesh>
+            <mesh material={shaft} position={[0, 0.1 + lower / 2, 0]}>
+              <boxGeometry args={[0.34, lower, 0.5]} />
+            </mesh>
+            {/* gunmetal edge trim on the shaft face, as on the hero plates */}
+            <mesh material={mats.gunmetal} position={[0, 0.24, 0.253]}>
+              <boxGeometry args={[0.22, 0.035, 0.012]} />
+            </mesh>
+            {/* glass stratum — the archive gap — with its seam of signal */}
+            <mesh material={mats.glass} position={[0, 0.1 + lower + strata / 2, 0]}>
+              <boxGeometry args={[0.29, strata, 0.43]} />
+            </mesh>
+            {/* seam runs past the glass faces so it reads without bloom */}
+            <mesh material={isEra ? mats.core : mats.ember} position={[0, 0.1 + lower + strata / 2, 0]}>
+              <boxGeometry args={[0.31, 0.05, 0.45]} />
+            </mesh>
+            <mesh material={shaft} position={[0, 0.1 + lower + strata + upper / 2, 0]}>
+              <boxGeometry args={[0.3, upper, 0.46]} />
+            </mesh>
+            <mesh material={mats.gunmetal} position={[0, 0.1 + h + 0.035, 0]}>
+              <boxGeometry args={[0.38, 0.07, 0.54]} />
+            </mesh>
+          </group>
         )
       })}
-      <mesh position={[0, -0.06, 0]}>
-        <boxGeometry args={[8.4, 0.1, 2.4]} />
-        <meshStandardMaterial color="#17181d" metalness={0.4} roughness={0.45} />
+      {/* ceramic dais over gunmetal skirt */}
+      <mesh material={mats.ceramic} position={[0, -0.09, 0]}>
+        <boxGeometry args={[8.4, 0.18, 2.6]} />
       </mesh>
+      <mesh material={mats.gunmetal} position={[0, -0.26, 0]}>
+        <boxGeometry args={[8.9, 0.16, 3.0]} />
+      </mesh>
+      {/* engraved timeline inlay running the dais, ember-lit */}
+      <mesh material={mats.ember} position={[0, 0.005, 0.9]}>
+        <boxGeometry args={[7.6, 0.012, 0.03]} />
+      </mesh>
+      {[-2.9, 0, 2.9].map((mx) => (
+        <mesh key={mx} material={mats.steel} position={[mx, 0.005, 1.1]}>
+          <boxGeometry args={[0.16, 0.014, 0.05]} />
+        </mesh>
+      ))}
     </group>
   )
 }

@@ -1,0 +1,1 @@
+import{w as e,o}from"./chunk-KS7C4IRE-CGqfcxTo.js";import{P as a,L as t}from"./pages-CT6mEm74.js";import"./env-CoG3rk47.js";function m(){return[{title:"Legal & Classification — ARASAKA"},{name:"description",content:t.lede}]}const p=e(function(){return o.jsx(a,{data:t})});export{p as default,m as meta};
