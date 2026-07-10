@@ -1,12 +1,9 @@
 import { useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Environment, Lightformer, ContactShadows, RoundedBox, Html, MeshReflectorMaterial } from '@react-three/drei'
-import { EffectComposer, Bloom, Vignette, SMAA, ToneMapping } from '@react-three/postprocessing'
-import { ToneMappingMode } from 'postprocessing'
+import { ContactShadows, RoundedBox, Html } from '@react-three/drei'
 import * as THREE from 'three'
 import { useHeroMats, type HeroMats } from './mats'
-
-type Tier = 'high' | 'low'
+import { HallColumns, HallGlyph, HallFloor, HallLighting, HallPost, type Tier } from './hall'
 
 /* THE CONTINUITY CORE — Data Temple staged as a machine-space (RESET, D-013).
    Not an object in a void: a sealed hall. Reflective composite floor, perimeter
@@ -154,66 +151,10 @@ function Temple({
         )}
       </group>
 
-      {/* ── The hall: perimeter security columns ── */}
-      {[-2.6, -1.55, -0.5, 0.55, 1.6, 2.65].map((a, i) => {
-        const r = 8.2
-        return (
-          <group key={i} position={[Math.sin(a) * r, 0.6, -3.5 - Math.cos(a) * (r * 0.55)]}>
-            <RoundedBox args={[0.62, 7.2, 0.62]} radius={0.06} smoothness={2} material={mats.obsidian} />
-            <mesh material={sm.perimeter.mat} position={[0, 0.4, 0.315]}>
-              <boxGeometry args={[0.03, 5.6, 0.012]} />
-            </mesh>
-            <mesh material={mats.gunmetal} position={[0, -2.9, 0]}>
-              <boxGeometry args={[0.86, 0.35, 0.86]} />
-            </mesh>
-          </group>
-        )
-      })}
-
-      {/* etched glyph on the fog wall — the seal, barely there */}
-      <group position={[compact ? 0 : -1.5, 1.6, -13]}>
-        <mesh material={mats.steel} rotation={[0, 0, -0.42]} position={[-1.05, 0, 0]}>
-          <boxGeometry args={[0.14, 5.2, 0.05]} />
-        </mesh>
-        <mesh material={mats.steel} rotation={[0, 0, 0.42]} position={[1.05, 0, 0]}>
-          <boxGeometry args={[0.14, 5.2, 0.05]} />
-        </mesh>
-        <mesh material={sm.perimeter.mat} position={[0, -1.35, 0]}>
-          <boxGeometry args={[1.7, 0.1, 0.05]} />
-        </mesh>
-      </group>
+      {/* ── The hall: perimeter security columns + glyph ── */}
+      <HallColumns mats={mats} seamMat={sm.perimeter.mat} />
+      <HallGlyph mats={mats} seamMat={sm.perimeter.mat} x={compact ? 0 : -1.5} />
     </group>
-  )
-}
-
-/* Reflective composite floor — reflections reveal form and make it a place.
-   Tier-gated: low tier gets a satin plane + contact shadow instead. */
-function Floor({ tier }: { tier: Tier }) {
-  if (tier === 'high') {
-    return (
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2.87, 0]}>
-        <planeGeometry args={[70, 44]} />
-        <MeshReflectorMaterial
-          blur={[280, 70]}
-          resolution={1024}
-          mixBlur={0.9}
-          mixStrength={0.55}
-          roughness={0.55}
-          depthScale={1.1}
-          minDepthThreshold={0.4}
-          maxDepthThreshold={1.4}
-          color="#08080a"
-          metalness={0.55}
-          mirror={0.55}
-        />
-      </mesh>
-    )
-  }
-  return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2.87, 0]}>
-      <planeGeometry args={[70, 44]} />
-      <meshStandardMaterial color="#08080a" metalness={0.6} roughness={0.4} />
-    </mesh>
   )
 }
 
@@ -258,32 +199,11 @@ export function HeroScene({
       <color attach="background" args={['#050505']} />
       <fog attach="fog" args={['#050505', 13, 30]} />
 
-      <ambientLight intensity={0.16} color="#20222a" />
-      <spotLight
-        position={[7, 12, 9]}
-        angle={0.45}
-        penumbra={1}
-        intensity={tier === 'high' ? 480 : 340}
-        color="#dfe4ee"
-        distance={50}
-        decay={1.4}
-        castShadow={tier === 'high'}
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
-        shadow-bias={-0.0004}
-      />
-      <spotLight position={[-9, 3, -5]} angle={0.6} penumbra={1} intensity={170} color="#e10600" distance={36} decay={1.6} />
-      <pointLight position={[0, -1, 9]} intensity={45} color="#8a90a0" distance={24} decay={1.7} />
-
-      <Environment resolution={128} frames={1}>
-        <Lightformer form="rect" intensity={2.4} color="#cfd6e2" scale={[10, 14, 1]} position={[6, 6, 8]} />
-        <Lightformer form="rect" intensity={1.1} color="#5a1010" scale={[8, 12, 1]} position={[-8, 2, -4]} />
-        <Lightformer form="rect" intensity={0.7} color="#20242c" scale={[16, 16, 1]} position={[0, 10, -10]} />
-      </Environment>
+      <HallLighting tier={tier} />
 
       <IgniteBridge ignited={ignited} igniteAt={igniteAt} />
       <TempleWithMats scrollY={scrollY} reducedMotion={reducedMotion} compact={compact} igniteAt={igniteAt} />
-      <Floor tier={tier} />
+      <HallFloor tier={tier} />
 
       {tier === 'low' && (
         <ContactShadows position={[0, -2.82, 0]} opacity={0.72} scale={18} blur={2.4} far={7} resolution={512} color="#000000" />
@@ -291,21 +211,7 @@ export function HeroScene({
 
       <Dolly scrollY={scrollY} compact={compact} />
 
-      <EffectComposer multisampling={0} enableNormalPass={false}>
-        {[
-          <Bloom
-            key="b"
-            intensity={tier === 'high' ? 0.62 : 0.48}
-            luminanceThreshold={0.74}
-            luminanceSmoothing={0.3}
-            mipmapBlur
-            radius={0.68}
-          />,
-          <ToneMapping key="t" mode={ToneMappingMode.ACES_FILMIC} />,
-          <Vignette key="v" eskil={false} offset={0.3} darkness={0.82} />,
-          ...(tier === 'high' ? [<SMAA key="s" />] : []),
-        ]}
-      </EffectComposer>
+      <HallPost tier={tier} />
     </Canvas>
   )
 }
