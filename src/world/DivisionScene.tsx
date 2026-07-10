@@ -120,28 +120,109 @@ function Nodes() {
   )
 }
 
-/* CONTINUITY — the archive. Stacked cognition strata; one record pulled for
-   review, its edge still lit. */
+/* CONTINUITY — the archive, in the Data Temple language. Cognition strata as
+   authored records: alternating obsidian/lacquer slabs separated by glass
+   interlayers, each interlayer carrying a dim ember seam. One record is drawn
+   out for review, its seam burning core-red. Gunmetal pylons rail the stack;
+   the whole reliquary stands on the ceramic dais over a gunmetal skirt, with
+   the ember index inlay and steel markers shared with the hero and colonnade. */
 function Archive() {
+  const mats = useHeroMats()
   const group = useRef<THREE.Group>(null!)
-  const seam = useRef<THREE.MeshStandardMaterial>(null!)
+  const records = 9
+  const slabH = 0.24
+  const gapH = 0.07
+  const drawn = 5
+  const stackH = records * slabH + (records - 1) * gapH
+  // Same local tuning as the colonnade — ceramic darkened for the hotter,
+  // bloomless division rig — but the ember sits lower than the colonnade's
+  // 0.9: this object carries eight seams, not one per stele, and at 0.9 the
+  // stack reads as red stripes instead of stacked records.
+  useLayoutEffect(() => {
+    mats.ceramic.color.set('#9b978d')
+    mats.ember.emissiveIntensity = 0.65
+  }, [mats])
   useFrame(({ clock }) => {
     const t = clock.elapsedTime
-    group.current.rotation.y = -0.5 + Math.sin(t * 0.08) * 0.06
-    seam.current.emissiveIntensity = 1.4 + Math.sin(t * 0.9) * 0.4
+    // shallow angle: the record faces must catch the front fill to separate
+    group.current.rotation.y = -0.19 + Math.sin(t * 0.07) * 0.07
+    mats.core.emissiveIntensity = 2.6 + Math.sin(t * 0.8) * 0.7
   })
   return (
-    <group ref={group} position={[0, -1.5, 0]}>
-      {Array.from({ length: 12 }, (_, i) => (
-        <mesh key={i} position={[i === 7 ? 0.5 : 0, i * 0.26, 0]}>
-          <boxGeometry args={[4.6, 0.14, 2.5]} />
-          <meshStandardMaterial color="#2b2d34" metalness={0.45} roughness={0.36} />
+    <group ref={group} position={[0, -1.35, 0]}>
+      {Array.from({ length: records }, (_, i) => {
+        const y = 0.1 + i * (slabH + gapH) + slabH / 2
+        const isDrawn = i === drawn
+        const z = isDrawn ? 0.62 : 0
+        const shaft = i % 2 ? mats.obsidian : mats.lacquer
+        return (
+          <group key={i} position={[0, y, z]}>
+            <mesh material={shaft}>
+              <boxGeometry args={[3.9, slabH, 2.1]} />
+            </mesh>
+            {/* ceramic registry tag on each record face — gunmetal vanishes
+                against obsidian head-on; the catalog must read in value */}
+            <mesh material={mats.ceramic} position={[-1.5, 0, isDrawn ? 1.06 : 1.056]}>
+              <boxGeometry args={[0.5, 0.06, 0.014]} />
+            </mesh>
+            {i < records - 1 && (
+              <>
+                {/* glass interlayer above the record, seam protruding past it */}
+                <mesh material={mats.glass} position={[0, slabH / 2 + gapH / 2, isDrawn ? -0.31 : 0]}>
+                  <boxGeometry args={[3.6, gapH, isDrawn ? 1.48 : 1.9]} />
+                </mesh>
+                <mesh material={mats.ember} position={[0, slabH / 2 + gapH / 2, -z]}>
+                  <boxGeometry args={[3.7, 0.028, 1.94]} />
+                </mesh>
+              </>
+            )}
+            {isDrawn && (
+              <>
+                {/* the record under review: core seam on its exposed lip */}
+                <mesh material={mats.core} position={[0, 0, 1.06]}>
+                  <boxGeometry args={[3.94, 0.05, 0.03]} />
+                </mesh>
+                <mesh material={mats.steel} position={[1.6, 0, 1.08]}>
+                  <boxGeometry args={[0.3, 0.09, 0.05]} />
+                </mesh>
+              </>
+            )}
+          </group>
+        )
+      })}
+      {/* gunmetal capital sealing the stack */}
+      <mesh material={mats.gunmetal} position={[0, 0.1 + stackH + 0.045, 0]}>
+        <boxGeometry args={[4.15, 0.09, 2.3]} />
+      </mesh>
+      {/* archive pylons — steel plinth, gunmetal rail, ember index light */}
+      {[-2.25, 2.25].map((px) => (
+        <group key={px} position={[px, 0, 0]}>
+          <mesh material={mats.steel} position={[0, 0.05, 0]}>
+            <boxGeometry args={[0.42, 0.1, 1.0]} />
+          </mesh>
+          <mesh material={mats.gunmetal} position={[0, 0.1 + (stackH + 0.2) / 2, 0]}>
+            <boxGeometry args={[0.26, stackH + 0.2, 0.62]} />
+          </mesh>
+          <mesh material={mats.ember} position={[px < 0 ? 0.14 : -0.14, 0.1 + (stackH + 0.2) / 2, 0]}>
+            <boxGeometry args={[0.02, stackH - 0.3, 0.06]} />
+          </mesh>
+        </group>
+      ))}
+      {/* ceramic dais over gunmetal skirt, ember index inlay + steel markers */}
+      <mesh material={mats.ceramic} position={[0, -0.09, 0]}>
+        <boxGeometry args={[6.6, 0.18, 3.6]} />
+      </mesh>
+      <mesh material={mats.gunmetal} position={[0, -0.26, 0]}>
+        <boxGeometry args={[7.1, 0.16, 4.0]} />
+      </mesh>
+      <mesh material={mats.ember} position={[0, 0.005, 1.42]}>
+        <boxGeometry args={[5.8, 0.012, 0.03]} />
+      </mesh>
+      {[-2.2, 0, 2.2].map((mx) => (
+        <mesh key={mx} material={mats.steel} position={[mx, 0.005, 1.62]}>
+          <boxGeometry args={[0.16, 0.014, 0.05]} />
         </mesh>
       ))}
-      <mesh position={[0.5 + 2.31, 7 * 0.26, 0]}>
-        <boxGeometry args={[0.02, 0.1, 2.3]} />
-        <meshStandardMaterial ref={seam} color="#1a0202" emissive="#e10600" emissiveIntensity={1.4} />
-      </mesh>
     </group>
   )
 }
