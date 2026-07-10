@@ -109,12 +109,13 @@ export default function HomeRoute() {
       {/* SEQ-01 — Arrival */}
       <section className="hero">
         <div className="hero__stage">
-          {env?.webgl ? (
-            <Suspense fallback={<div className="hero__fallback" aria-hidden />}>
+          {/* The fallback stays mounted under the canvas so the scene can
+              crossfade over it instead of swapping in against bare void. */}
+          <div className="hero__fallback" aria-hidden />
+          {env?.webgl && (
+            <Suspense fallback={null}>
               <HeroScene tier={env.tier} reducedMotion={env.reducedMotion} scrollY={scrollY} />
             </Suspense>
-          ) : (
-            <div className="hero__fallback" aria-hidden />
           )}
         </div>
 

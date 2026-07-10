@@ -29,7 +29,12 @@
   `ACCESS ▸ /route` on links, `UPLINK ▸ host` external, `CTRL ▸ name` buttons,
   `data-cur` overrides on nav mark / divisions / SND with live LIVE/COLD state;
   right-edge flip; validated via scripts/shot-cursor.mjs).
-- Loading state / first-paint choreography.
+- ~~Loading state / first-paint choreography~~ DONE (session 13 — staged
+  arrival: nav drop + hero copy staggered rise via html.js-gated CSS
+  animations running from the prerendered paint; WebGL temple crossfades in
+  over a persistent fallback after its first frame instead of popping;
+  no-JS stays fully visible, reduced-motion clamp collapses it; validated
+  via scripts/shot-boot.mjs with 4x-slowed CDP playback).
 - Compact (390) hero: subtle scrim behind the paragraph where it crosses the
   bright dais — readable today but low margin.
 

@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Environment, Lightformer, ContactShadows, RoundedBox, Html } from '@react-three/drei'
 import { EffectComposer, Bloom, Vignette, SMAA, ToneMapping } from '@react-three/postprocessing'
@@ -150,8 +150,13 @@ export function HeroScene({
   scrollY: React.MutableRefObject<number>
 }) {
   const compact = typeof window !== 'undefined' && window.innerWidth < 780
+  // The canvas mounts invisible over the prerendered fallback and crossfades in
+  // once the renderer has a frame down — the temple resolves, it never pops.
+  const [live, setLive] = useState(false)
   return (
     <Canvas
+      className={`hero__scene${live ? ' hero__scene--live' : ''}`}
+      onCreated={() => requestAnimationFrame(() => requestAnimationFrame(() => setLive(true)))}
       shadows={tier === 'high'}
       dpr={[1, tier === 'high' ? 1.8 : 1.35]}
       gl={{ antialias: tier !== 'high', powerPreference: 'high-performance', stencil: false }}

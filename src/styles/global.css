@@ -375,6 +375,11 @@ button {
   z-index: 0;
 }
 .hero__stage canvas { display: block; width: 100% !important; height: 100% !important; }
+.hero__scene {
+  opacity: 0;
+  transition: opacity 1.8s var(--e-inout);
+}
+.hero__scene--live { opacity: 1; }
 .hero__fallback {
   position: absolute;
   inset: 0;
@@ -442,6 +447,37 @@ button {
 @keyframes scrollpulse {
   0%, 100% { transform: scaleY(0.5); opacity: 0.5; transform-origin: top; }
   50% { transform: scaleY(1); opacity: 1; transform-origin: top; }
+}
+
+/* ── First-paint choreography ──────────────────────────────────────────
+   The arrival is staged, not dumped: nav settles from above, then the hero
+   copy rises line by line while the WebGL temple crossfades in behind it
+   (.hero__scene above). Pure CSS animations gated on html.js, so they run
+   from the prerendered paint with no hydration wait; without JS the page
+   stays fully visible, and the reduced-motion clamp collapses them. */
+.js .nav { animation: boot-drop 0.9s var(--e-out) 0.1s both; }
+.js .hero__eyebrow,
+.js .hero__title,
+.js .hero__jp,
+.js .hero__lede,
+.js .hero__meta { animation: boot-rise 1.1s var(--e-out) both; }
+.js .hero__eyebrow { animation-delay: 0.25s; }
+.js .hero__title { animation-delay: 0.4s; animation-duration: 1.3s; }
+.js .hero__jp { animation-delay: 0.7s; }
+.js .hero__lede { animation-delay: 0.85s; }
+.js .hero__meta { animation-delay: 1.05s; }
+.js .hero__scroll { animation: boot-fade 1.2s var(--e-out) 1.7s both; }
+@keyframes boot-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes boot-drop {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes boot-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* ══════════════════════════════════════════════════════════════════════

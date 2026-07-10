@@ -220,3 +220,25 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
 - Gates: `npm run build` clean (tsc + prerender + postbuild); 4 hover
   screenshots inspected (ring widens, tag reads, edge-flip correct); zero
   console/page errors.
+
+## Session 13 — First-paint choreography (2026-07-11)
+- Craft-polish item 3: the arrival is now staged instead of dumped. Nav
+  settles from above (0.1s), then the hero copy rises line by line —
+  eyebrow 0.25s, title 0.4s, jp 0.7s, lede 0.85s, meta 1.05s, descend
+  indicator fades at 1.7s — all pure CSS animations gated on `html.js`,
+  so they run from the prerendered first paint with no hydration wait.
+  Without JS the page stays fully visible; the global reduced-motion
+  clamp collapses the timings.
+- The lazy WebGL temple no longer pops: the `hero__fallback` gradient
+  stays mounted under the canvas, and the Canvas (`.hero__scene`)
+  crossfades in over 1.8s once the renderer has its first frame down
+  (double-rAF after onCreated → `--live`).
+- New gate script `scripts/shot-boot.mjs` (Playwright system Chrome vs
+  preview): slows animations 4x via CDP Animation.setPlaybackRate so
+  fixed-delay captures land inside the stagger deterministically —
+  early (eyebrow only, title still hidden), mid (stack risen, temple
+  crossfaded), settled 1440 + 390; asserts `.hero__scene--live` and
+  zero console/page errors.
+- Housekeeping: `.react-router/` (generated route types) gitignored.
+- Gates: `npm run build` clean (tsc + prerender + postbuild); 4
+  screenshots inspected; scene live asserted; zero console/page errors.
