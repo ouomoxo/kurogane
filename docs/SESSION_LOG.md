@@ -269,3 +269,22 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
 - Gates: `npm run build` clean (tsc + prerender + postbuild); 1440
   screenshot of /global-network/ inspected (new copy renders, layout
   intact); CI run 29112105686 green (deploy + live-route verify).
+
+## Session 16 — Lighthouse audit + a11y fixes (2026-07-11)
+- Ran Lighthouse (headless Chrome, swiftshader) against the live site:
+  perf 0.28 / a11y 0.95 / best-practices 1.0 / SEO 1.0. Perf score is a
+  software-GL artifact (WebGL burns main thread under swiftshader — TBT
+  10.5s, bootup 8s); unminified/inefficient-cache findings trace to Google
+  Fonts + gh-pages headers, neither ours to fix. Real findings = the two
+  a11y failures:
+  1. color-contrast — `--ash-2 #5c5b56` on `--void-1 #080808` = 2.94:1
+     (foot__seal mono line + foot__disclaimer, i.e. the legal disclaimer).
+     Lifted the token hue-preserved to `#7a7972` = 4.58:1 (WCAG AA); sits
+     between old ash-2 and `--ash #8b8a84` so the type hierarchy holds.
+  2. label-content-name-mismatch — SND toggle's aria-label lacked its
+     visible text. Now `SND: enable/mute ambient sound`.
+- Gates: `npm run build` clean (tsc + prerender + postbuild); hero + footer
+  screenshots inspected (disclaimer legible, still muted; computed color
+  asserted rgb(122,121,114) via playwright); Lighthouse a11y re-run on the
+  local build = 1.0 with both audits passing; CI run 29112562067 green
+  (deploy + live-route verify).

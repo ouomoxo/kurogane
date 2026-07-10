@@ -46,7 +46,14 @@ smallest honest increment first):
 - ~~Content pass: re-read all division copy for tone drift / repetition;
   tighten weakest paragraph~~ DONE (session 15 — Global Network / Night City
   block rewritten; rest judged consistent).
-- Lighthouse audit (perf/a11y/SEO) on the live site; fix the top finding.
+- ~~Lighthouse audit (perf/a11y/SEO) on the live site; fix the top finding~~
+  DONE (session 16 — a11y 0.95→1.0: ash-2 contrast lift + SND aria-label;
+  perf 0.28 is a swiftshader/software-GL artifact, remaining perf findings
+  are third-party: Google Fonts CSS + gh-pages cache headers).
+- Optional perf follow-up if a cycle wants it: self-host the three Google
+  Fonts families (removes render-blocking third-party CSS + its unminified
+  9 KiB); re-measure Lighthouse on real-GPU Chrome before trusting any
+  perf delta.
 
 ## Autonomous protocol
 Main-session cron re-enters this file each cycle, picks the top undone item,
