@@ -344,3 +344,16 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
 - Addendum (03:13 KST, duplicate cron fire): independent re-check confirmed
   the same state — CI green, all 12 routes (11 + /proto) return 200,
   disclaimer intact. No changes.
+
+## Session 20 — 2026-07-11 (03:16 KST) — cadence fix, health re-confirmed
+
+- Third cron fire within 6 minutes (03:10 / 03:13 / 03:14). Root cause found:
+  the `kurogane-autonomous-build` job ran on `everyMs: 300000` (5-minute
+  cadence) — appropriate for the active build phase, wasteful now that
+  NEXT_ACTIONS is fully done and cycles are health-check-only.
+- Action: slowed the OpenClaw cron job to a 12-hour cadence (payload/protocol
+  unchanged, description updated). Owner notified on Telegram.
+- Health re-confirmed this cycle: live homepage 200, full disclaimer sentence
+  present ("…not affiliated with, endorsed by, or licensed from CD PROJEKT RED
+  or R. Talsorian Games. All corporate figures and statements are fictional.").
+- No source changes. Docs-only commit, [skip ci].
