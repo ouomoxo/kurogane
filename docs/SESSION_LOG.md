@@ -326,3 +326,18 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
 - No source changes. Gates: `npm run build` clean (tsc + prerender +
   postbuild), preview screenshot of / inspected (hero type, JP glyphs,
   nav intact). Docs-only commit, [skip ci].
+
+## Session 19 — 2026-07-11 (03:10 KST) — steady-state health check
+
+- NEXT_ACTIONS has no undone items (true-device check remains blocked on owner
+  hardware), so per protocol this cycle is a live-site health check only —
+  no new scope, no source changes.
+- CI: latest "Deploy & verify Pages" run on main and the subsequent gh-pages
+  build both completed/success (2026-07-10 18:01 UTC).
+- Live routes: all 11 prerendered routes (/, advanced-systems, careers,
+  contact, continuity, corporation, global-network, intelligence, investors,
+  legal, security + proto) return 200 via curl.
+- Disclaimer intact on homepage: "…not affiliated with, endorsed by, or
+  licensed from CD PROJEKT RED or R. Talsorian Games. All corporate figures
+  and statements are fictional."
+- No build/deploy performed. Docs-only commit, [skip ci].
