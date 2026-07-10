@@ -41,17 +41,17 @@ function Temple({
     })
     if (keystone.current) keystone.current.position.y = PLATES.length * gap + 0.32
     if (!reducedMotion) {
-      float.current.position.y = 0.55 + Math.sin(t * 0.5) * 0.06
+      float.current.position.y = 0.85 + Math.sin(t * 0.5) * 0.06
       float.current.rotation.y = t * 0.06
       mats.core.emissiveIntensity = 2.0 + open * 1.2 + Math.sin(t * 0.9) * 0.45
     } else {
-      float.current.position.y = 0.55
+      float.current.position.y = 0.85
       mats.core.emissiveIntensity = 2.0
     }
   })
 
   return (
-    <group position={[compact ? 0 : 1.35, 0, 0]} scale={compact ? 0.78 : 0.98}>
+    <group position={[compact ? 0 : 2.3, 0, 0]} scale={compact ? 0.78 : 0.9}>
       <group ref={float}>
         {PLATES.map((w, i) => (
           <group key={i} ref={(el) => (plateRefs.current[i] = el)}>
@@ -91,8 +91,8 @@ function Temple({
       </group>
 
       {/* signal column */}
-      <mesh material={mats.core} position={[0, -0.85, 0]}>
-        <cylinderGeometry args={[0.035, 0.035, 2.6, 12]} />
+      <mesh material={mats.core} position={[0, -0.65, 0]}>
+        <cylinderGeometry args={[0.035, 0.035, 3.0, 12]} />
       </mesh>
 
       {/* ceramic dais */}
@@ -135,7 +135,7 @@ function Dolly({ scrollY, compact }: { scrollY: React.MutableRefObject<number>; 
     camera.position.z += (tz - camera.position.z) * k
     camera.position.x += (pointer.x * 0.55 - camera.position.x) * k * 0.6
     camera.position.y += (0.7 + pointer.y * 0.35 - camera.position.y) * k * 0.6
-    camera.lookAt(compact ? 0 : 0.9, 0.05, 0)
+    camera.lookAt(compact ? 0 : 1.15, 0.05, 0)
   })
   return null
 }

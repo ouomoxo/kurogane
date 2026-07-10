@@ -400,7 +400,7 @@ button {
 }
 .hero__eyebrow { color: var(--white-dim); }
 .hero__title {
-  font-size: clamp(52px, 12vw, 168px);
+  font-size: clamp(52px, 9.6vw, 140px);
   font-weight: 600;
   margin-top: 20px;
   letter-spacing: -0.02em;
