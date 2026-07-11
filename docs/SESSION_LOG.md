@@ -386,3 +386,23 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
   yield reads as bug; D2 15–50% scroll dead zone — temple exits viewport).
 - Loop-01 decision on current build: **REJECTED.** Implementation is the next
   cycle's Step D. Code deliberately untouched this session per directive.
+
+## Session 23 — Loop 01 Step D implemented (reconstructed from git, 2026-07-11)
+- Prior cycle committed 0dcbd69 "QC Loop 01 Step D: D2 pinned hero choreography,
+  D1 threshold copy yield, D5 dais inversion, D3 anchored glyph" and pushed;
+  "Deploy & verify Pages" green (00:02 UTC). Hall refactor d526c41 also landed
+  (the previously-uncommitted P1 work — reconciled, nothing lost).
+- That cycle ended before updating SESSION_LOG/CURRENT_STATUS; this entry
+  backfills the record from commit + CI evidence only.
+
+## Session 24 — Loop 01 Step E: re-render + verification (2026-07-11)
+- Took over stale build lock (50 min). Confirmed tree clean, HEAD==origin/main,
+  Step D build live via green deploy run.
+- Re-rendered the exact frame matrix from the DEPLOYED site:
+  `node scripts/qc-observe.mjs loop-01 after` → 19 frames + recording,
+  pageerrors 0, netfail 0 → artifacts/review/loop-01/after/.
+- Frame-pair inspection recorded in comparison/COMPARISON.md + verification.md:
+  D1/D2/D3/D5 improvements visible at captured frames → CANDIDATE (not
+  VERIFIED — Step F adversarial pass pending). D4/D6–D10 unchanged (OPEN).
+- Loop-01 state: A–E done; F (adversarial review incl. recording + mobile +
+  reduced-motion frames) is the next mandatory action, then G decision.
