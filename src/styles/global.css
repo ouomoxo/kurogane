@@ -364,7 +364,16 @@ button {
    ══════════════════════════════════════════════════════════════════════ */
 .hero {
   position: relative;
-  min-height: 100svh;
+  /* Pinned stage (D2): the extra height is scroll room in which the machine
+     transforms in place — strata part, camera pushes/orbits — instead of the
+     page scrolling past it. The open arc completes at ~1 viewport of scroll;
+     the remaining pin is where Record 001 arrives over the opened archive. */
+  height: 240svh;
+}
+.hero__pin {
+  position: sticky;
+  top: 0;
+  height: 100svh;
   display: flex;
   align-items: flex-end;
   overflow: hidden;
@@ -388,7 +397,7 @@ button {
     radial-gradient(80% 70% at 20% 80%, rgba(40, 44, 54, 0.5), transparent 60%),
     var(--void);
 }
-.hero::after {
+.hero__pin::after {
   /* legibility scrim under the overlay copy */
   content: '';
   position: absolute;
@@ -402,6 +411,19 @@ button {
   z-index: 2;
   width: 100%;
   padding-bottom: clamp(64px, 12vh, 128px);
+  /* Threshold yield (D1): the copy holds fully opaque, then steps down
+     decisively when the strata begin to part — a state change, not a fade. */
+  transition: opacity 0.3s var(--e-out), transform 0.3s var(--e-out);
+}
+.hero__pin--yield .hero__overlay {
+  opacity: 0;
+  transform: translateY(-30px);
+  pointer-events: none;
+}
+.hero__pin.hero__pin--yield .hero__scroll {
+  /* outweighs the .js boot-fade fill so the indicator actually clears */
+  animation: none;
+  opacity: 0;
 }
 .hero__eyebrow { color: var(--white-dim); }
 .hero__title {
@@ -450,6 +472,7 @@ button {
   gap: 12px;
   writing-mode: vertical-rl;
   color: var(--ash-2);
+  transition: opacity 0.3s var(--e-out);
 }
 @media (min-width: 900px) { .hero__scroll { display: flex; } }
 .hero__scroll-line {
@@ -513,8 +536,20 @@ button {
    SEQUENCES
    ══════════════════════════════════════════════════════════════════════ */
 .seqs {
+  /* Record 001 rides up over the still-pinned, opened archive (D2) before
+     the hero releases; the void-matched panel makes it read as an arriving
+     record, not a page cut. */
+  position: relative;
+  z-index: 2;
+  margin-top: -40svh;
   background: linear-gradient(180deg, var(--void) 0%, var(--void-1) 40%, var(--void-2) 100%);
   border-top: 1px solid var(--hair);
+}
+@media (prefers-reduced-motion: reduce) {
+  /* No scroll choreography under reduced motion: no pin, no overlap. */
+  .hero { height: auto; min-height: 100svh; }
+  .hero__pin { position: relative; height: auto; min-height: 100svh; }
+  .seqs { margin-top: 0; }
 }
 .seq {
   padding-block: clamp(90px, 16vh, 200px);

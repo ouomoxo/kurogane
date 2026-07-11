@@ -33,18 +33,21 @@ export function HallColumns({ mats, seamMat }: { mats: HeroMats; seamMat: THREE.
   )
 }
 
-/* Etched glyph on the fog wall — the seal, barely there. */
-export function HallGlyph({ mats, seamMat, x = -1.5 }: { mats: HeroMats; seamMat: THREE.Material; x?: number }) {
+/* The seal, ETCHED into structure (D3): a grounded back-wall slab carries the
+   glyph as an inset dark-on-dark engraving. Nothing floats; no orphan bar. */
+export function HallGlyph({ mats, x = -1.5 }: { mats: HeroMats; x?: number }) {
   return (
-    <group position={[x, 1.6, -13]}>
-      <mesh material={mats.steel} rotation={[0, 0, -0.42]} position={[-1.05, 0, 0]}>
+    <group position={[x, 1.2, -12.4]}>
+      {/* back-wall slab — grounded through the floor line */}
+      <mesh material={mats.obsidian} position={[0, 0, -0.36]}>
+        <boxGeometry args={[7.2, 9.4, 0.6]} />
+      </mesh>
+      {/* engraved strokes, barely proud of the wall face */}
+      <mesh material={mats.steel} rotation={[0, 0, -0.42]} position={[-1.05, 0.4, -0.04]}>
         <boxGeometry args={[0.14, 5.2, 0.05]} />
       </mesh>
-      <mesh material={mats.steel} rotation={[0, 0, 0.42]} position={[1.05, 0, 0]}>
+      <mesh material={mats.steel} rotation={[0, 0, 0.42]} position={[1.05, 0.4, -0.04]}>
         <boxGeometry args={[0.14, 5.2, 0.05]} />
-      </mesh>
-      <mesh material={seamMat} position={[0, -1.35, 0]}>
-        <boxGeometry args={[1.7, 0.1, 0.05]} />
       </mesh>
     </group>
   )

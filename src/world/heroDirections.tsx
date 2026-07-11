@@ -291,7 +291,7 @@ function Inner({ variant, f, compact }: { variant: HeroDirection; f: number; com
       {variant === 'b' && <DefenseCore mats={mats} sm={sm} open={open} />}
       {variant === 'c' && <DataTemple mats={mats} sm={sm} open={open} />}
       <HallColumns mats={mats} seamMat={sm.perimeter.mat} />
-      <HallGlyph mats={mats} seamMat={sm.perimeter.mat} x={compact ? 0 : -1.5} />
+      <HallGlyph mats={mats} x={compact ? 0 : -1.5} />
     </group>
   )
 }

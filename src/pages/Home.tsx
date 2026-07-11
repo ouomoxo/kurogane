@@ -37,7 +37,8 @@ const GATE_LINES = ['ARASAKA SECURE NETWORK', 'NODE TYO-000 · PUBLIC ACCESS LAY
 export default function HomeRoute() {
   const scrollY = useRef(0)
   const revealRefs = useRef<HTMLElement[]>([])
-  const overlayRef = useRef<HTMLDivElement>(null)
+  const pinRef = useRef<HTMLDivElement>(null)
+  const yielded = useRef(false)
   const [env, setEnv] = useState<ClientEnv | null>(null)
   const [auth, setAuth] = useState(0)
   // Access threshold: 'hold' (readout running) → 'open' (panels parting) → 'done'
@@ -105,13 +106,20 @@ export default function HomeRoute() {
       ticking = true
       requestAnimationFrame(() => {
         const h = window.innerHeight || 1
-        // Arc spans ~1.6 viewports so the core keeps opening as it exits
-        scrollY.current = Math.min(window.scrollY / (h * 1.6), 1)
-        // The copy is part of the machine-state: it yields as the archive opens
-        if (overlayRef.current) {
-          const f = Math.max(0, 1 - (window.scrollY / h) * 1.7)
-          overlayRef.current.style.opacity = String(f * f)
-          overlayRef.current.style.transform = `translateY(${(1 - f) * -34}px)`
+        const p = window.scrollY / h
+        // The hero is pinned for ~1.4 viewports (D2): the open arc completes
+        // within the pin, so the machine transforms instead of exiting.
+        scrollY.current = Math.min(p, 1)
+        // Copy is a threshold state, not a fade (D1): hold until the strata
+        // begin to part, then yield decisively. Hysteresis so it can't flicker.
+        if (pinRef.current) {
+          if (!yielded.current && p > 0.12) {
+            yielded.current = true
+            pinRef.current.classList.add('hero__pin--yield')
+          } else if (yielded.current && p < 0.05) {
+            yielded.current = false
+            pinRef.current.classList.remove('hero__pin--yield')
+          }
         }
         ticking = false
       })
@@ -147,8 +155,11 @@ export default function HomeRoute() {
 
   return (
     <main className="home">
-      {/* SEQ-01 — Arrival */}
+      {/* SEQ-01 — Arrival. The stage is pinned (D2): scroll transforms the
+          machine in place — strata part, camera pushes and orbits — and
+          Record 001 arrives over the opened archive before the pin releases. */}
       <section className="hero">
+        <div className="hero__pin" ref={pinRef}>
         <div className="hero__stage">
           {/* The fallback stays mounted under the canvas so the scene can
               crossfade over it instead of swapping in against bare void. */}
@@ -160,7 +171,7 @@ export default function HomeRoute() {
           )}
         </div>
 
-        <div className="hero__overlay wrap" ref={overlayRef}>
+        <div className="hero__overlay wrap">
           <p className="eyebrow hero__eyebrow">{HERO.eyebrow}</p>
           <h1 className="hero__title display">
             Sovereignty,
@@ -206,6 +217,7 @@ export default function HomeRoute() {
         <div className="hero__scroll mono" aria-hidden>
           <span>Descend</span>
           <span className="hero__scroll-line" />
+        </div>
         </div>
       </section>
 

@@ -23,7 +23,8 @@ function useStateMats() {
       mat: new THREE.MeshStandardMaterial({ color: '#1a0202', emissive: new THREE.Color('#e10600'), emissiveIntensity: 0 }),
       target,
     })
-    return { dais: mk(2.2), signal: mk(2.4), strata: mk(2.0), perimeter: mk(1.1) }
+    // dais at 1.6: saturated red ring below the bloom knee (D5) — deep, not glowing salmon
+    return { dais: mk(1.6), signal: mk(2.4), strata: mk(2.0), perimeter: mk(1.1) }
   }, [])
 }
 
@@ -125,10 +126,14 @@ function Temple({
         <cylinderGeometry args={[0.035, 0.035, 3.0, 12]} />
       </mesh>
 
-      {/* ceramic dais */}
+      {/* ceremonial lacquer dais (D5): dark body, thin ceramic INLAY ring,
+          red ring kept deep — ceramic is the accent, never the ground */}
       <group position={[0, -2.3, 0]}>
-        <mesh material={mats.ceramic}>
+        <mesh material={mats.lacquer}>
           <cylinderGeometry args={[1.9, 2.2, 0.28, 64]} />
+        </mesh>
+        <mesh material={mats.ceramic} position={[0, 0.141, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <ringGeometry args={[1.52, 1.6, 96]} />
         </mesh>
         <mesh material={mats.gunmetal} position={[0, -0.24, 0]}>
           <cylinderGeometry args={[2.45, 2.6, 0.2, 64]} />
@@ -153,22 +158,27 @@ function Temple({
 
       {/* ── The hall: perimeter security columns + glyph ── */}
       <HallColumns mats={mats} seamMat={sm.perimeter.mat} />
-      <HallGlyph mats={mats} seamMat={sm.perimeter.mat} x={compact ? 0 : -1.5} />
+      <HallGlyph mats={mats} x={compact ? 0 : -1.5} />
     </group>
   )
 }
 
-/* Camera with mass: scroll-driven push, faint pointer drift, no idle motion. */
+/* Camera with mass: scroll-driven push + lateral orbit + rise (D2 — the pin
+   holds the stage while this carries the transition), faint pointer drift,
+   no idle motion. */
 function Dolly({ scrollY, compact }: { scrollY: React.MutableRefObject<number>; compact: boolean }) {
   const { camera, pointer } = useThree()
   useFrame((_, dt) => {
     const k = 1 - Math.pow(0.002, dt)
+    const s = THREE.MathUtils.clamp(scrollY.current, 0, 1)
     const base = compact ? 14.6 : 12.6
-    const tz = base - THREE.MathUtils.clamp(scrollY.current, 0, 1) * 3.1
+    const tz = base - s * 2.9
+    const tx = pointer.x * 0.5 + (compact ? 0 : s * -1.4)
+    const ty = 0.7 + pointer.y * 0.3 + s * 0.7
     camera.position.z += (tz - camera.position.z) * k
-    camera.position.x += (pointer.x * 0.5 - camera.position.x) * k * 0.5
-    camera.position.y += (0.7 + pointer.y * 0.3 - camera.position.y) * k * 0.5
-    camera.lookAt(compact ? 0 : 1.15, 0.05, 0)
+    camera.position.x += (tx - camera.position.x) * k * 0.5
+    camera.position.y += (ty - camera.position.y) * k * 0.5
+    camera.lookAt(compact ? 0 : 1.15, 0.05 + s * 0.6, 0)
   })
   return null
 }
