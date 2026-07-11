@@ -1,0 +1,1 @@
+import{w as e,o}from"./chunk-KS7C4IRE-CGqfcxTo.js";import{A as t,P as n}from"./pages-B3LYLHaf.js";import"./preload-helper-0BAQ_m7E.js";import"./env-Ch1ycRg2.js";function d(){return[{title:"Advanced Systems — ARASAKA"},{name:"description",content:t.lede}]}const A=e(function(){return o.jsx(n,{data:t})});export{A as default,d as meta};

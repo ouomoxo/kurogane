@@ -1,0 +1,1 @@
+import{w as e,o as n}from"./chunk-KS7C4IRE-CGqfcxTo.js";import{P as o,I as t}from"./pages-B3LYLHaf.js";import"./preload-helper-0BAQ_m7E.js";import"./env-Ch1ycRg2.js";function l(){return[{title:"Intelligence — ARASAKA"},{name:"description",content:t.lede}]}const p=e(function(){return n.jsx(o,{data:t})});export{p as default,l as meta};

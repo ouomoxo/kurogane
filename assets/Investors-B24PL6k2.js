@@ -1,0 +1,1 @@
+import{w as o,o as e}from"./chunk-KS7C4IRE-CGqfcxTo.js";import{P as n,d as t}from"./pages-B3LYLHaf.js";import"./preload-helper-0BAQ_m7E.js";import"./env-Ch1ycRg2.js";function p(){return[{title:"Investors — ARASAKA"},{name:"description",content:t.lede}]}const u=o(function(){return e.jsx(n,{data:t})});export{u as default,p as meta};
