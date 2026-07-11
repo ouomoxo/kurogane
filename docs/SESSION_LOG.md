@@ -406,3 +406,20 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
   VERIFIED — Step F adversarial pass pending). D4/D6–D10 unchanged (OPEN).
 - Loop-01 state: A–E done; F (adversarial review incl. recording + mobile +
   reduced-motion frames) is the next mandatory action, then G decision.
+
+## Session 25 — Loop 01 Steps F+G: adversarial review + decision (2026-07-11)
+- Took over stale build lock (49 min). Deployed build unchanged (0dcbd69,
+  Pages last-modified 00:02 UTC); stepf/ sweep frames (09:53 KST) confirmed
+  captured against that build via timestamps.
+- Step F: adversarial pass over stepf/sweep-05..42 (10 intermediate scroll
+  states), scroll-00, desktop-2560-settled, mobile-390 settled + scroll-50,
+  ix-reduced-motion — all frames visually inspected. Refutation attempts on
+  D1/D2/D3/D5 FAILED → VERIFIED-RESOLVED. One successful attack: NEW D11
+  (HIGH) — mobile 390 hero copy collides with strata stack, beam behind
+  "Secured.", no scrim/reflow. Full record:
+  artifacts/review/loop-01/stepf/adversarial-review.md.
+- Step G decision: **CANDIDATE.** Zero critical defects survive; D4/D11 HIGH
+  + D6–D10 open. Loop-01 complete (1 of min 5). Clean-of-critical adversarial
+  reviews: 1 consecutive.
+- Ledger + CURRENT_STATUS updated; scripts/stepf-capture.mjs committed.
+- Next mandatory action: Loop-02 Step A observe (loop-02 before matrix).
