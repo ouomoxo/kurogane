@@ -423,3 +423,13 @@ See NEXT_ACTIONS.md — deepen homepage sequences with distinct 3D, split bundle
   reviews: 1 consecutive.
 - Ledger + CURRENT_STATUS updated; scripts/stepf-capture.mjs committed.
 - Next mandatory action: Loop-02 Step A observe (loop-02 before matrix).
+
+## Session 26 — CTO pivot: interface-first homepage (2026-07-11)
+- Owner granted full CTO autonomy; 3D deprioritized. D-014 recorded.
+- Removed HeroScene/three.js from the homepage. New system stage: hgrid,
+  watermark glyph, scanline (post-gate, one-shot), THE SEAL (ui/Seal.tsx),
+  session Dossier, Record-001 redaction, threshold sweeps. Pin tightened
+  240svh→165svh after a first-render critique found the yielded stretch empty.
+- Evidence: artifacts/reset/ re-captured (gate/hero/25/50/mobile) and
+  inspected; D11 mobile collision eliminated by design; D4/D6/D7 obsolete on
+  the homepage (ledger updated next cycle). Build clean.

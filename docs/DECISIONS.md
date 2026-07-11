@@ -58,3 +58,17 @@
   copy yields on scroll as the archive opens → "IN VIEW ▸ CONTINUITY CORE"
   binds text to scene → content sections reframed as RECORD 00N of one system,
   with a red thread connecting the hero to Record 001.
+- **D-014 CTO PIVOT: interface-first (owner grant, 2026-07-11 10:48).** Owner
+  removed all process rules, granted CTO autonomy, and deprioritized 3D
+  ("3D? 별로 필요없으니까 — 애니메이션·로직 너 생각대로"). CTO concurrence with
+  evidence: the QC ledger's defects clustered in WebGL (D4 column rhythm, D6
+  fallback, D7 materials, D11 mobile collision) while everything that scored
+  well was interface (gate, classification language, typography, telemetry).
+  The homepage is now a pure system-UI cinematic: THE SEAL (SVG instrument —
+  glyph draws in on access; red arc + index are scroll-driven), hairline grid +
+  etched watermark, one-shot surveillance scanline, session dossier ("Observed"
+  chip → the visitor's own file, locally derived, never transmitted), redacted
+  passage in Record 001 with hover declassification, threshold sweeps at record
+  boundaries. three.js no longer loads on the homepage (≈1MB JS removed from
+  the critical path; mobile becomes first-class). Division-page scenes remain
+  for now — replacement to interface language at CTO discretion.

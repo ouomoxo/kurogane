@@ -1,10 +1,8 @@
-import { Suspense, lazy, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import { HERO, CLOSING, SEQUENCES, NAV, GOV } from '../content/site'
-import { detectWebGL, prefersReducedMotion, performanceTier, sessionClass } from '../lib/env'
-
-// The hero WebGL bundle (three.js) loads after the prerendered copy paints.
-const HeroScene = lazy(() => import('../world/HeroScene').then((m) => ({ default: m.HeroScene })))
+import { prefersReducedMotion, sessionClass } from '../lib/env'
+import { Seal } from '../ui/Seal'
 
 export function meta() {
   return [
@@ -20,8 +18,6 @@ export function meta() {
 }
 
 interface ClientEnv {
-  webgl: boolean
-  tier: 'high' | 'low'
   reducedMotion: boolean
   sc: ReturnType<typeof sessionClass>
 }
@@ -44,11 +40,12 @@ export default function HomeRoute() {
   // Access threshold: 'hold' (readout running) → 'open' (panels parting) → 'done'
   const [gate, setGate] = useState<'hold' | 'open' | 'done'>('hold')
   const ignited = gate !== 'hold'
+  const sealRef = useRef<SVGSVGElement>(null)
+  const sealParts = useRef<{ arc: SVGCircleElement | null; index: SVGGElement | null }>({ arc: null, index: null })
+  const [records, setRecords] = useState(0)
 
   useEffect(() => {
     setEnv({
-      webgl: detectWebGL(),
-      tier: performanceTier(),
       reducedMotion: prefersReducedMotion(),
       sc: sessionClass(),
     })
@@ -112,6 +109,15 @@ export default function HomeRoute() {
         scrollY.current = Math.min(p, 1)
         // Copy is a threshold state, not a fade (D1): hold until the strata
         // begin to part, then yield decisively. Hysteresis so it can't flicker.
+        if (sealRef.current) {
+          if (!sealParts.current.arc) {
+            sealParts.current.arc = sealRef.current.querySelector('[data-arc]')
+            sealParts.current.index = sealRef.current.querySelector('[data-index]')
+          }
+          const f = Math.min(p, 1)
+          if (sealParts.current.arc) sealParts.current.arc.style.strokeDashoffset = String(100 - f * 88)
+          if (sealParts.current.index) sealParts.current.index.style.transform = `rotate(${f * 300}deg)`
+        }
         if (pinRef.current) {
           if (!yielded.current && p > 0.12) {
             yielded.current = true
@@ -139,6 +145,7 @@ export default function HomeRoute() {
         entries.forEach((e) => {
           if (e.isIntersecting) {
             e.target.classList.add('is-in')
+            setRecords((r) => r + 1)
             io.unobserve(e.target)
           }
         })
@@ -160,15 +167,15 @@ export default function HomeRoute() {
           Record 001 arrives over the opened archive before the pin releases. */}
       <section className="hero">
         <div className="hero__pin" ref={pinRef}>
-        <div className="hero__stage">
-          {/* The fallback stays mounted under the canvas so the scene can
-              crossfade over it instead of swapping in against bare void. */}
-          <div className="hero__fallback" aria-hidden />
-          {env?.webgl && (
-            <Suspense fallback={null}>
-              <HeroScene tier={env.tier} reducedMotion={env.reducedMotion} scrollY={scrollY} ignited={ignited} />
-            </Suspense>
-          )}
+        <div className="hero__stage hero__stage--sys" aria-hidden>
+          <div className="hgrid" />
+          <svg className="watermark" viewBox="0 0 32 32">
+            <path d="M16 5 L25 27 L18 27 L16 21 L14 27 L7 27 Z" fill="none" stroke="currentColor" strokeWidth="0.5" />
+          </svg>
+          <div className={`scanline${gate === 'done' && env && !env.reducedMotion ? ' scan--run' : ''}`} />
+          <div className="seal-wrap">
+            <Seal ref={sealRef} on={ignited} instant={!!env?.reducedMotion} />
+          </div>
         </div>
 
         <div className="hero__overlay wrap">
@@ -181,7 +188,7 @@ export default function HomeRoute() {
           <p className="hero__jp jp">{HERO.jp}</p>
           <p className="lede hero__lede">{HERO.lede}</p>
           <p className="hero__object mono" aria-hidden>
-            In view ▸ Continuity Core · Cognition strata ×5 · Signal TYO-000
+            System ▸ Public Access Layer · Seal 001 · Clearance 0
           </p>
           <div className="hero__meta mono">
             <span>
@@ -239,11 +246,22 @@ export default function HomeRoute() {
               <div className="seq__body">
                 <p className="jp seq__jp">{s.jp}</p>
                 <h2 className="seq__title display">{s.title}</h2>
-                {s.body.map((p, k) => (
-                  <p key={k} className="lede seq__p">
-                    {p}
-                  </p>
-                ))}
+                {s.body.map((p, k) =>
+                  s.id === 'history' && k === 1 ? (
+                    <p key={k} className="lede seq__p">
+                      Where states failed, the corporation held — through manufacturing, security, finance, and{' '}
+                      <span className="redact" tabIndex={0}>
+                        <span className="redact__text">the custody of memory itself</span>
+                        <span className="redact__stamp mono">Declassified · session-scoped</span>
+                      </span>
+                      .
+                    </p>
+                  ) : (
+                    <p key={k} className="lede seq__p">
+                      {p}
+                    </p>
+                  ),
+                )}
                 <Link className="seq__link mono" to={`/${s.id === 'history' ? 'corporation' : s.id}`}>
                   Enter division →
                 </Link>
@@ -305,6 +323,38 @@ export default function HomeRoute() {
           </div>
         </div>
       </section>
+      {env && <Dossier sc={env.sc} records={records} />}
     </main>
+  )
+}
+
+/* The dossier — the system quietly shows you your own file. Elegant,
+   unsettling, factual: everything listed is locally derived and never sent. */
+function Dossier({ sc, records }: { sc: ReturnType<typeof sessionClass>; records: number }) {
+  const [open, setOpen] = useState(false)
+  const [dwell, setDwell] = useState(0)
+  useEffect(() => {
+    const id = window.setInterval(() => setDwell((d) => d + 1), 1000)
+    return () => window.clearInterval(id)
+  }, [])
+  const mm = String(Math.floor(dwell / 60)).padStart(2, '0')
+  const ss = String(dwell % 60).padStart(2, '0')
+  return (
+    <aside className={`dossier${open ? ' dossier--open' : ''}`}>
+      <button className="dossier__chip mono" onClick={() => setOpen((v) => !v)} aria-expanded={open}>
+        <span className="dot" /> Observed
+      </button>
+      {open && (
+        <dl className="dossier__panel mono">
+          <div><dt>Subject</dt><dd>External · Civilian</dd></div>
+          <div><dt>Region</dt><dd>{sc.tz}</dd></div>
+          <div><dt>Input class</dt><dd>{sc.pointer}</dd></div>
+          <div><dt>Terminal</dt><dd>{sc.vp}</dd></div>
+          <div><dt>Records accessed</dt><dd>{String(records).padStart(2, '0')}</dd></div>
+          <div><dt>Dwell</dt><dd>{mm}:{ss}</dd></div>
+          <div className="dossier__note"><dt>Retention</dt><dd>None. This node does not transmit.</dd></div>
+        </dl>
+      )}
+    </aside>
   )
 }
